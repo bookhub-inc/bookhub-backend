@@ -21,6 +21,11 @@ public class UsuarioAPI {
  @Autowired
  private UsuarioDAO usuarioDAO;
 
+ @GetMapping("/")
+ public String index(){
+  return "<h1>Hello World ! </h1>";
+
+ }
 
  @PostMapping("/usuario")
  public ResponseEntity save(@RequestBody final UsuarioEntity usuarioEntity) {
