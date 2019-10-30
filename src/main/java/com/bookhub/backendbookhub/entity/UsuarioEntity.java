@@ -1,12 +1,9 @@
 package com.bookhub.backendbookhub.entity;
 
 import com.bookhub.backendbookhub.enums.Relacionamento;
+import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Arthur Rio
@@ -18,24 +15,42 @@ public class UsuarioEntity {
 
  @Id
  @GeneratedValue
+ @ApiModelProperty(example="10")
  private Long id;
+
  @Column(nullable = false)
+ @ApiModelProperty(example = "Arthur")
  private String nome;
+
  @Column
+ @ApiModelProperty(example = "Rio")
  private String sobrenome;
+
  @Column
  private String facebook;
+
  @Column
+ @ApiModelProperty(example = "11977451122")
  private String telefone;
+
  @Column
+ @ApiModelProperty(example = "SOLTEIRO",allowableValues = "SOLTEIRO, CASADO, VIUVO, DIVORCIADO")
  private Relacionamento relacionamento;
+
  @Column
+ @ApiModelProperty(example = "thor@gmail.com")
  private String email;
+
  @Column
+ @ApiModelProperty(example = "thor")
  private String usuario;
+
  @Column
+ @ApiModelProperty(example = "pokpk13123")
  private String senha;
+
  @Column
+ @ApiModelProperty(example = "27441707200")
  private String cpf;
 
  public UsuarioEntity() {

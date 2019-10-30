@@ -2,14 +2,14 @@ package com.bookhub.backendbookhub.api;
 
 import com.bookhub.backendbookhub.dao.UsuarioDAO;
 import com.bookhub.backendbookhub.entity.UsuarioEntity;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * @author Arthur Rio
@@ -27,35 +27,31 @@ public class UsuarioAPI {
 
  }
 
+ @ResponseStatus(CREATED)
+ @ApiOperation(value="Insere um usuário no banco de dados",notes = "Insere um usuário no banco de dados", response = UsuarioEntity.class)
  @PostMapping("/usuario")
- public ResponseEntity save(@RequestBody final UsuarioEntity usuarioEntity) {
-  try {
-   return ResponseEntity.ok(usuarioDAO.save(usuarioEntity));
-  } catch (Exception e) {
-   String msg = e.getMessage();
-   return ResponseEntity.badRequest().body(msg);
-  }
+ public UsuarioEntity save(@RequestBody final UsuarioEntity usuarioEntity) {
+   return usuarioDAO.save(usuarioEntity);
  }
 
+ @ResponseStatus(OK)
  @GetMapping("/usuario/{id}")
- public ResponseEntity find(@PathVariable("id") final Long id) {
-  try {
-   return ResponseEntity.ok(usuarioDAO.find(id));
-  } catch (Exception e) {
-   String msg = e.getMessage();
-   return ResponseEntity.badRequest().body(msg);
-  }
+ public UsuarioEntity find(@PathVariable("id") final Long id) {
+   return usuarioDAO.find(id);
  }
 
+ @ResponseStatus(NO_CONTENT)
+ @ApiOperation(value = "Excluir um usuário", notes = "Excluir um usuário")
  @DeleteMapping("/usuario/{id}")
- public ResponseEntity delete(@PathVariable("id") final Long id) {
+ public void delete(@PathVariable("id") final Long id) {
   usuarioDAO.delete(id);
-  return ResponseEntity.ok("Sucesso");
  }
 
+ @ResponseStatus(OK)
+ @ApiOperation(value="Busca todos os usuários cadastrados",notes = "Busca todos os usuários cadastrados", response = UsuarioEntity.class, responseContainer = "List")
  @GetMapping("/usuario")
- public ResponseEntity find() {
-  return ResponseEntity.ok(usuarioDAO.findAll());
+ public List find() {
+  return usuarioDAO.findAll();
  }
 
 
