@@ -1,4 +1,4 @@
-package com.bookhub.backendbookhub.swagger;
+package com.bookhub.backendbookhub.configure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
