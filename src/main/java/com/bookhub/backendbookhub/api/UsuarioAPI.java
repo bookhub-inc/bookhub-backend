@@ -17,7 +17,7 @@ import static org.springframework.http.HttpStatus.*;
  * @since 9/16/19
  */
 @RestController
-@Api(value="Usuario",tags = "Usuário",description = "")
+@Api(value="Usuario",tags = "Usuario",description = " ")
 public class UsuarioAPI {
 
  @Autowired
