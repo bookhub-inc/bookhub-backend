@@ -1,11 +1,11 @@
 CREATE USER 'bkh_adm'@'%'
 identified by 'bkh_admn';
 
-create database BKH_ADM;
+create database bkh_adm;
 
-use BKH_ADM;
+use bkh_adm;
 
-GRANT ALL PRIVILEGES ON BKH_ADM TO 'BKH_ADM';
+GRANT ALL PRIVILEGES ON bkh_adm TO 'bkh_adm';
 
 Create table Usuario(
 Id int primary key,
