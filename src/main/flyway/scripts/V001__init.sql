@@ -1,4 +1,4 @@
-CREATE USER 'BKH_ADM'
+CREATE USER 'bkh_adm'@'%'
 identified by 'bkh_admn';
 
 create database BKH_ADM;
