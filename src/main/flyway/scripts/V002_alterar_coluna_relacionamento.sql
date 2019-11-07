@@ -1,1 +1,5 @@
 ALTER TABLE bkh_adm.usuario  change relacionamento relacionamento varchar(30);
+
+ALTER TABLE bkh_adm.usuario  add email varchar(40) not null;
+
+ALTER TABLE bkh_adm.usuario  add avatar_url varchar(21844) not null;

@@ -4,6 +4,8 @@ import com.bookhub.backendbookhub.enums.Relacionamento;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 /**
  * @author Arthur Rio
@@ -22,7 +24,7 @@ public class UsuarioEntity {
  @ApiModelProperty(example = "Arthur")
  private String nome;
 
- @Column
+ @Column(nullable = false)
  @ApiModelProperty(example = "Rio")
  private String sobrenome;
 
@@ -37,9 +39,9 @@ public class UsuarioEntity {
  @ApiModelProperty(example = "SOLTEIRO",allowableValues = "SOLTEIRO, CASADO, VIUVO, DIVORCIADO")
  private Relacionamento relacionamento;
 
- @Column
- @ApiModelProperty(example = "thor@gmail.com")
- private String email;
+// @Column
+// @ApiModelProperty(example = "thor@gmail.com")
+// private String email;
 
  @Column
  @ApiModelProperty(example = "thor")
@@ -53,17 +55,21 @@ public class UsuarioEntity {
  @ApiModelProperty(example = "27441707200")
  private String cpf;
 
+ @Column(name="dta_criacao",nullable = false)
+ private LocalDateTime dataCriacao;
+
+
+
  public UsuarioEntity() {
  }
 
- public UsuarioEntity(final Long id, final String nome, final String sobrenome, final String facebook, final String telefone, final Relacionamento relacionamento, final String email, final String usuario, final String senha, final String cpf) {
+ public UsuarioEntity(final Long id, final String nome, final String sobrenome, final String facebook, final String telefone, final Relacionamento relacionamento, final String usuario, final String senha, final String cpf) {
   this.id = id;
   this.nome = nome;
   this.sobrenome = sobrenome;
   this.facebook = facebook;
   this.telefone = telefone;
   this.relacionamento = relacionamento;
-  this.email = email;
   this.usuario = usuario;
   this.senha = senha;
   this.cpf = cpf;
