@@ -32,7 +32,7 @@ public class UsuarioAPI {
  }
 
  @ResponseStatus(CREATED)
- @ApiOperation(value = "Salva usuario",notes = "Insere um usuário no banco de dados", response = UsuarioEntity.class)
+ @ApiOperation(value = "Salva usuario",notes = "Insere um usuário no banco de dados", response = UsuarioPostResponseVO.class)
  @PostMapping("/usuario")
  public ResponseEntity<UsuarioPostResponseVO> save(@RequestBody final UsuarioPostRequestVO request) {
   UsuarioPostResponseVO respose = usuarioService.save(request);

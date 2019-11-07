@@ -2,7 +2,6 @@ package com.bookhub.backendbookhub.dao;
 
 
 import com.bookhub.backendbookhub.entity.TopicoEntity;
-import com.bookhub.backendbookhub.entity.UsuarioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ public class TopicoDAO {
 
     public List findByIdUsuario(final Integer idUsuario){
 
-        String query = "select * from topico where idUsuario = :idUsuario";
+        String query = "select * from topico where id_usuario = :idUsuario order by dta_criacao desc";
 
         return em.createNativeQuery(query,TopicoEntity.class)
                 .setParameter("idUsuario",idUsuario)

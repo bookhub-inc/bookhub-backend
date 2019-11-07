@@ -19,3 +19,10 @@ ALTER TABLE  bkh_adm.usuario MODIFY id int NOT NULL AUTO_INCREMENT;
 
 
 alter table  bkh_adm.topico add spoiler TINYINT(1) not null;
+
+
+SET FOREIGN_KEY_CHECKS=0;
+
+ALTER TABLE  bkh_adm.topico MODIFY id int NOT NULL AUTO_INCREMENT;
+
+SET FOREIGN_KEY_CHECKS=1;
