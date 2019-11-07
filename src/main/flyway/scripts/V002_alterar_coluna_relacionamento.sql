@@ -1,0 +1,1 @@
+ALTER TABLE bkh_adm.usuario  change relacionamento relacionamento varchar(30);
