@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class UsuarioEntity {
 
  @Id
- @GeneratedValue
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Integer id;
 
  @Column(nullable = false)
