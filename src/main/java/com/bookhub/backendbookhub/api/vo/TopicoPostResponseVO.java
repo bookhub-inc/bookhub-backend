@@ -1,0 +1,18 @@
+package com.bookhub.backendbookhub.api.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class TopicoPostResponseVO {
+
+    private Integer id;
+    private String titulo;
+    private Integer idUsuario;
+    private Boolean spoiler;
+
+
+}
