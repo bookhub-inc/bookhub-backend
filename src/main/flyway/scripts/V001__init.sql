@@ -90,9 +90,19 @@ id_usuario int not null,
 id_livro int not null,
 lido tinyint(1),
 comprado tinyint(1),
-nota tinyint(1),
+nota float,
 foreign key (id_Usuario) references usuario(id),
-foreign key (id_Livro) references livro(id));
+foreign key (id_Livro) references livro(id)
+);
 
 alter table usuario
 add foreign key (id_avatar) references avatar(id);
+
+CREATE TABLE recomendador_livro_usuario (
+   id_usuario BIGINT NOT NULL,
+   id_livro BIGINT NOT NULL,
+   nota FLOAT NOT NULL,
+   PRIMARY KEY (id_usuario, id_livro),
+   INDEX (id_usuario),
+   INDEX (id_livro)
+ )

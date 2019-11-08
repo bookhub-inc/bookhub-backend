@@ -12,7 +12,7 @@ public class UsuarioEstantePostRequestVO {
 
     private Boolean comprado;
 
-    private Boolean nota;
+    private Integer nota;
 
 
     public UsuarioEstanteEntity toEntity(){

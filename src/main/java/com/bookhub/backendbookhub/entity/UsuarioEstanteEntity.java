@@ -34,6 +34,6 @@ public class UsuarioEstanteEntity {
     private Boolean comprado;
 
     @Column
-    private Boolean nota;
+    private Integer nota;
 
 }
