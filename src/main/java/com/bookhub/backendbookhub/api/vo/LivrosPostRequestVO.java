@@ -31,6 +31,7 @@ public class LivrosPostRequestVO {
                 .editora(editora)
                 .autor(autor)
                 .url(url)
+                .aprovado(false)
                 .build();
     }
 }
