@@ -1,14 +1,12 @@
 package com.bookhub.backendbookhub.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -18,14 +16,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 @Table(name = "LIVRO")
 @Entity
 public class LivroEntity {
 
  @Id
- @GeneratedValue
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
  @Column
- private Long id;
+ private Integer id;
 
  @Column(nullable = false)
  private String nome;
@@ -40,12 +39,15 @@ public class LivroEntity {
  private String descricao;
 
  @Column
- private Integer aprovado;
+ private Boolean aprovado;
 
  @Column(name = "dta_lancamento")
- private Date dataLancamento;
+ private LocalDate dataLancamento;
 
  @Column(name = "n_paginas")
  private Long nPaginas;
+
+ @Column(name = "url_livro")
+ private String url;
 
 }
