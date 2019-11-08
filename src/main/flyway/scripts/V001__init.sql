@@ -2,66 +2,68 @@ create database bkh_adm;
 
 use bkh_adm;
 
+CREATE USER 'bkh_adm'@'%'
+identified by 'bkh_admn';
+
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, PROCESS, REFERENCES, INDEX, ALTER, SHOW DATABASES, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER ON *.* TO 'bkh_adm'@'%' WITH GRANT OPTION;
 
 Create table usuario(
-id int primary key auto_increment,
+id int primary key auto_increment not null,
 nome varchar(30) not null,
 sobrenome varchar(30) not null,
-facebook varchar(40),
+email varchar(40) not null unique,
+id_avatar int not null,
 telefone varchar(14) UNIQUE,
-relacionamento char,
-usuario varchar(25) not null,
+relacionamento varchar(30),
+login varchar(25) not null unique,
 senha varchar(40) not null,
-cpf varchar(11) unique,
 dta_criacao datetime not null,
-dta_ultacesso datetime not null
-);
+dta_ultacesso datetime not null);
 
 create table livro(
-id int primary key,
+id int primary key auto_increment,
+capa varchar(2000),
 nome varchar(80) not null,
 autor varchar(40) not null,
-publicadora varchar(60),
+editora varchar(60),
 descricao text,
 dta_lancamento date,
-n_paginas int
-);
+n_paginas int,
+aprovado tinyint(1));
 
 create table livxcat(
 id_livro int not null,
-id_cat int not null
-);
+id_cat int not null);
 
 create table categoria(
 id int primary key auto_increment,
-nome_categoria varchar(40)
-);
+nome_categoria varchar(40) not null unique);
 
 create table comentario(
-id int primary key,
-comentario varchar(500),
+id int primary key auto_increment not null,
+comentario text,
 id_usuario int not null,
-rating double,
-dta_criacao datetime,
-id_livro int
-);
+id_livro int not null,
+nota int,
+dta_criacao datetime);
 
 create table topico(
-id int primary key,
-titulo varchar (60),
+id int primary key auto_increment,
+titulo varchar (60) not null,
 id_usuario int not null,
-usuario varchar(25),
-dta_criacao date
-);
+descricao text,
+dta_criacao date);
 
 create table topico_comentario(
-id int primary key not null,
-comentario varchar(500),
-dta_comentario datetime,
+id int primary key not null auto_increment,
+comentario varchar(500) not null,
+dta_comentario datetime not null,
 id_usuario int not null,
 id_topico int not null);
 
+Create table avatar(
+id int primary key auto_increment not null,
+url varchar(2000) not null);
 
 alter table livxcat
 add foreign key (id_livro) references livro(id),
@@ -81,11 +83,14 @@ set sql_safe_updates = 0;
 update usuario set senha = aes_encrypt(senha,64);
 
 create table usuario_estante(
-id int primary key,
-id_usuario int,
-id_livro int,
-lido boolean,
-comprado boolean,
-gostou boolean,
+id int primary key auto_increment not null,
+id_usuario int not null,
+id_livro int not null,
+lido tinyint(1),
+comprado tinyint(1),
+nota tinyint(1),
 foreign key (id_Usuario) references usuario(id),
 foreign key (id_Livro) references livro(id));
+
+alter table usuario
+add foreign key (id_avatar) references avatar(id);
