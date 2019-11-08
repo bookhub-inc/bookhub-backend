@@ -35,17 +35,10 @@ public class UsuarioEntity {
  private String sobrenome;
 
  @Column
- private String facebook;
-
- @Column
  private String telefone;
 
  @Column
  private Relacionamento relacionamento;
-
-// @Column
-// @ApiModelProperty(example = "thor@gmail.com")
-// private String email;
 
  @Column
  private String usuario;
