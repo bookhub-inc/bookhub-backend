@@ -1,9 +1,11 @@
 package com.bookhub.backendbookhub.service;
 
 import com.bookhub.backendbookhub.api.vo.LivrosPostRequestVO;
+import com.bookhub.backendbookhub.api.vo.UsuarioEstantePostRequestVO;
 import com.bookhub.backendbookhub.dao.LivroDAO;
 import com.bookhub.backendbookhub.entity.LivroCategoriaEntity;
 import com.bookhub.backendbookhub.entity.LivroEntity;
+import com.bookhub.backendbookhub.entity.UsuarioEstanteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +41,18 @@ public class LivroService {
         livroDAO.removerLivroCategoria(new LivroCategoriaEntity(idLivro,idCategoria));
     }
 
+
+    @Transactional
+    public void adicionarUsuarioEstante(UsuarioEstantePostRequestVO request){
+        livroDAO.adicionarUsuarioEstante(request.toEntity());
+    }
+
+    @Transactional
+    public void adicionarUsuarioEstante(Integer idUsuarioEstante){
+        // TODO Colocar mensagem caso não retorne nada !
+        UsuarioEstanteEntity usuarioEstante =livroDAO.findUsuarioEstante(idUsuarioEstante);
+        livroDAO.removerUsuarioEstante(usuarioEstante);
+    }
 
 
 }

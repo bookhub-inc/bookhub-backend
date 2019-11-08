@@ -2,6 +2,8 @@ package com.bookhub.backendbookhub.dao;
 
 import com.bookhub.backendbookhub.entity.LivroCategoriaEntity;
 import com.bookhub.backendbookhub.entity.LivroEntity;
+import com.bookhub.backendbookhub.entity.UsuarioEntity;
+import com.bookhub.backendbookhub.entity.UsuarioEstanteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -39,5 +41,18 @@ public class LivroDAO  {
     public void removerLivroCategoria(LivroCategoriaEntity livroCategoriaEntity){
         em.remove(livroCategoriaEntity);
     }
+
+    public UsuarioEstanteEntity adicionarUsuarioEstante(UsuarioEstanteEntity usuarioEstanteEntity) {
+        return em.merge(usuarioEstanteEntity);
+    }
+
+    public void removerUsuarioEstante(UsuarioEstanteEntity usuarioEstanteEntity) {
+        em.remove(usuarioEstanteEntity);
+    }
+
+    public UsuarioEstanteEntity findUsuarioEstante(Integer id){
+        return em.find(UsuarioEstanteEntity.class,id);
+    }
+
 
 }

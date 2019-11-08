@@ -2,8 +2,6 @@ package com.bookhub.backendbookhub.api;
 
 
 import com.bookhub.backendbookhub.api.vo.LivrosPostRequestVO;
-import com.bookhub.backendbookhub.api.vo.TopicoPostRequestVO;
-import com.bookhub.backendbookhub.api.vo.TopicoPostResponseVO;
 import com.bookhub.backendbookhub.entity.LivroEntity;
 import com.bookhub.backendbookhub.service.LivroService;
 import io.swagger.annotations.Api;
