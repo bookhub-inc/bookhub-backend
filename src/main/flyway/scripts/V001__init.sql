@@ -52,7 +52,8 @@ id int primary key auto_increment,
 titulo varchar (60) not null,
 id_usuario int not null,
 descricao text,
-dta_criacao date);
+dta_criacao date,
+spoiler tinyint(1));
 
 create table topico_comentario(
 id int primary key not null auto_increment,
