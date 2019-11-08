@@ -33,12 +33,12 @@ public class LivroService {
 
     @Transactional
     public void adicionarLivroCategoria(Integer idCategoria, Integer idLivro){
-        livroDAO.adicionarLivroCategoria(new LivroCategoriaEntity(idLivro,idCategoria));
+        livroDAO.adicionarLivroCategoria(new LivroCategoriaEntity(null,idLivro,idCategoria));
     }
 
     @Transactional
     public void removerLivroCategoria(Integer idCategoria, Integer idLivro){
-        livroDAO.removerLivroCategoria(new LivroCategoriaEntity(idLivro,idCategoria));
+        livroDAO.removerLivroCategoria(new LivroCategoriaEntity(null,idLivro,idCategoria));
     }
 
 

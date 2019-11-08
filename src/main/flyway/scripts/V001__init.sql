@@ -32,6 +32,7 @@ n_paginas int,
 aprovado tinyint(1));
 
 create table livxcat(
+id int primary key auto_increment,
 id_livro int not null,
 id_cat int not null);
 
