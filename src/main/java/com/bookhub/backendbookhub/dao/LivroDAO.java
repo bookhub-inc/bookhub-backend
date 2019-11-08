@@ -26,7 +26,7 @@ public class LivroDAO  {
 
     public List listByNome(final String nome) {
 
-        String sql = "select * from idLivro where nome like '%nome%'";
+        String sql = "select * from livro where nome like '%nome%'";
 
         return em.createNativeQuery(sql,LivroEntity.class)
                 .setParameter("nome",nome)

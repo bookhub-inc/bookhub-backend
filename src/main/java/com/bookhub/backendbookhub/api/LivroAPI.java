@@ -23,8 +23,8 @@ public class LivroAPI {
     private LivroService livroService;
 
     @ResponseStatus(CREATED)
-    @ApiOperation(value = "Salva idLivro",notes = "Insere um idLivro no banco de dados", response = LivrosPostRequestVO.class)
-    @PostMapping("/idLivro")
+    @ApiOperation(value = "Salva Livro",notes = "Insere um livro no banco de dados", response = LivrosPostRequestVO.class)
+    @PostMapping("/livro")
     public ResponseEntity<LivroEntity> save(@RequestBody final LivrosPostRequestVO request) {
         LivroEntity respose = livroService.save(request);
         return new ResponseEntity<>(respose,CREATED);
