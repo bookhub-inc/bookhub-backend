@@ -19,7 +19,7 @@ public class UsuarioDAO {
  @Autowired
  private EntityManager em;
 
- public UsuarioEntity find(final Long id) {
+ public UsuarioEntity find(final Integer id) {
   return em.find(UsuarioEntity.class, id);
  }
 
@@ -31,7 +31,7 @@ public class UsuarioDAO {
   return em.merge(usuarioEntity);
  }
 
- public void delete(final Long id) {
+ public void delete(final Integer id) {
   final UsuarioEntity user = find(id);
   em.remove(user);
  }

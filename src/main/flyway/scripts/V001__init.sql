@@ -1,124 +1,108 @@
-CREATE USER 'BKH_ADM'
+create database bkh_adm;
+
+use bkh_adm;
+
+CREATE USER 'bkh_adm'@'%'
 identified by 'bkh_admn';
 
-create database BKH_ADM;
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, PROCESS, REFERENCES, INDEX, ALTER, SHOW DATABASES, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER ON *.* TO 'bkh_adm'@'%' WITH GRANT OPTION;
 
-use BKH_ADM;
+Create table usuario(
+id int primary key auto_increment not null,
+nome varchar(30) not null,
+sobrenome varchar(30) not null,
+email varchar(40) not null unique,
+id_avatar int not null,
+telefone varchar(14) UNIQUE,
+relacionamento varchar(30),
+login varchar(25) not null unique,
+senha varchar(40) not null,
+dta_criacao datetime not null,
+dta_ultacesso datetime not null);
 
-GRANT ALL PRIVILEGES ON BKH_ADM TO 'BKH_ADM';
+create table livro(
+id int primary key auto_increment,
+capa varchar(2000),
+nome varchar(80) not null,
+autor varchar(40) not null,
+editora varchar(60),
+descricao text,
+dta_lancamento date,
+n_paginas int,
+aprovado tinyint(1));
 
-Create table Usuario(
-Id int primary key,
-Nome varchar(30) not null,
-Sobrenome varchar(30) not null,
-Facebook varchar(40),
-Telefone varchar(14) UNIQUE,
-Relacionamento char,
-Usuario varchar(25) not null,
-Senha varchar(40) not null,
-Cpf varchar(11) unique,
-Dta_criacao datetime not null,
-Dta_ultacesso datetime not null
+create table livxcat(
+id int primary key auto_increment,
+id_livro int not null,
+id_cat int not null);
+
+create table categoria(
+id int primary key auto_increment,
+nome_categoria varchar(40) not null unique);
+
+create table comentario(
+id int primary key auto_increment not null,
+comentario text,
+id_usuario int not null,
+id_livro int not null,
+nota int,
+dta_criacao datetime);
+
+create table topico(
+id int primary key auto_increment,
+titulo varchar (60) not null,
+id_usuario int not null,
+descricao text,
+dta_criacao date,
+spoiler tinyint(1));
+
+create table topico_comentario(
+id int primary key not null auto_increment,
+comentario varchar(500) not null,
+dta_comentario datetime not null,
+id_usuario int not null,
+id_topico int not null);
+
+Create table avatar(
+id int primary key auto_increment not null,
+url varchar(2000) not null);
+
+alter table livxcat
+add foreign key (id_livro) references livro(id),
+add foreign key (id_cat) references categoria(id);
+
+alter table comentario
+add foreign key (id_usuario) references usuario(id),
+add foreign key (id_livro) references livro(id);
+
+alter table topico_comentario
+add foreign key (id_topico) references topico(id);
+
+alter table usuario modify column senha varbinary(255);
+
+set sql_safe_updates = 0;
+
+update usuario set senha = aes_encrypt(senha,64);
+
+create table usuario_estante(
+id int primary key auto_increment not null,
+id_usuario int not null,
+id_livro int not null,
+lido tinyint(1),
+comprado tinyint(1),
+nota float,
+foreign key (id_Usuario) references usuario(id),
+foreign key (id_Livro) references livro(id)
 );
 
-create table Livro_favorito(
-Id_usuario int,
-Usuario varchar(25),
-Id_livro int,
-Nome_livro varchar(80));
+alter table usuario
+add foreign key (id_avatar) references avatar(id);
 
-create table Livro(
-Id int primary key,
-Nome varchar(80) not null,
-Autor varchar(40) not null,
-Publicadora varchar(60),
-Descricacao text,
-Dta_lancamento date,
-N_paginas int
-);
-
-create table LivXcat(
-Id_livro int,
-Id_cat int
-);
-
-create table Categoria(
-Id int primary key,
-Categoria varchar(40)
-);
-
-create table Comentario(
-Id int primary key,
-Comentario varchar(500),
-Id_usuario int,
-Usuario varchar(25),
-Rating double,
-Dta_comentario date,
-Id_livro int
-);
-
-create table Topico(
-Id int primary key,
-Titulo varchar (60),
-Id_usuario int,
-Usuario varchar(25)
-);
-
-create table Topico_comentario(
-Id int primary key,
-Comentario varchar(500),
-Dta_comentario datetime,
-Id_usuario int,
-Usuario varchar(25),
-Id_topico int);
-
-
-alter table Livro_favorito
-add foreign key (Id_usuario) references Usuario(Id),
-add foreign key (Id_livro) references Livro(Id);
-
-alter table LivXcat
-add foreign key (Id_livro) references Livro(Id),
-add foreign key (Id_cat) references Categoria(Id);
-
-alter table Comentario
-add foreign key (Id_usuario) references Usuario(Id),
-add foreign key (Id_livro) references Livro(Id);
-
-alter table Topico_comentario
-add foreign key (Id_topico) references Topico(Id);
-
-use bkh_adm;
-
-alter table Usuario modify column Senha varbinary(255);
-
-Set SQL_SAFE_UPDATES = 0;
-
-Update Usuario set Senha = aes_encrypt(Senha,64);
-
-
-use bkh_adm;
-
-alter table Topico
-add column Dta_Criacao datetime after Titulo;
-
-Create table Usuario_Livro(
-Id int primary key,
-Id_Usuario int,
-Usuario varchar (20),
-Id_Livro int,
-Nome varchar(60),
- foreign key (Id_usuario) references Usuario(Id),
- foreign key (Id_Livro) references Livro(Id));
- 
- Create table Usuario_Estante(
- Id int primary key,
- Id_Usuario Int,
- Id_Livro Int,
- Nome varchar(60),
- Lido binary,
- Comprado binary,
- foreign key (Id_Usuario) references Usuario(Id),
- foreign key (Id_Livro) references Livro(Id));
- 
- drop table Livro_favorito;
+CREATE TABLE recomendador_livro_usuario (
+   id_usuario BIGINT NOT NULL,
+   id_livro BIGINT NOT NULL,
+   nota FLOAT NOT NULL,
+   PRIMARY KEY (id_usuario, id_livro),
+   INDEX (id_usuario),
+   INDEX (id_livro)
+ )

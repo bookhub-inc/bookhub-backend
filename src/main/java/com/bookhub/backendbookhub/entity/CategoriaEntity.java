@@ -1,42 +1,28 @@
 package com.bookhub.backendbookhub.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 /**
  * @author Arthur Rio
  * @since 9/16/19
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Table(name = "CATEGORIA")
 @Entity
 public class CategoriaEntity {
 
  @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ @Column
  private Long id;
 
- @Column(name = "nome")
+ @Column(name = "nome_categoria")
  private String nome;
 
- public CategoriaEntity(final Long id, final String nome) {
-  this.id = id;
-  this.nome = nome;
- }
-
- public Long getId() {
-  return id;
- }
-
- public void setId(final Long id) {
-  this.id = id;
- }
-
- public String getNome() {
-  return nome;
- }
-
- public void setNome(final String nome) {
-  this.nome = nome;
- }
 }

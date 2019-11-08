@@ -25,7 +25,20 @@ dependencies {
 
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-	
-	runtimeOnly 'com.h2database:h2'
+
+	// https://mvnrepository.com/artifact/org.apache.mahout/mahout-mr
+	compile group: 'org.apache.mahout', name: 'mahout-mr', version: '0.13.0'
+
+	// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client
+	compile group: 'org.apache.hadoop', name: 'hadoop-client', version: '3.2.1'
+
+	// https://mvnrepository.com/artifact/org.apache.mahout/mahout-integration
+	compile group: 'org.apache.mahout', name: 'mahout-integration', version: '0.13.0'
+
+	compileOnly 'org.projectlombok:lombok:1.18.10'
+	annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
