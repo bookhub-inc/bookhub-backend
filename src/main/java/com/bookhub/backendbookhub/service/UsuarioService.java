@@ -4,6 +4,8 @@ import com.bookhub.backendbookhub.api.vo.UsuarioPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioPostResponseVO;
 import com.bookhub.backendbookhub.dao.UsuarioDAO;
 import com.bookhub.backendbookhub.entity.UsuarioEntity;
+import com.bookhub.backendbookhub.exception.CampoExistenteException;
+import com.bookhub.backendbookhub.exception.UsuarioExistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,14 @@ public class UsuarioService {
     private UsuarioDAO usuarioDAO;
 
 
-    public UsuarioPostResponseVO save(UsuarioPostRequestVO usuarioPostRequestVO){
+    public UsuarioPostResponseVO save(UsuarioPostRequestVO usuarioPostRequestVO) throws CampoExistenteException, UsuarioExistenteException {
+
+
+        if( usuarioDAO.existeUsuario(usuarioPostRequestVO.getTelefone(),
+                usuarioPostRequestVO.getLogin(),usuarioPostRequestVO.getEmail())) {
+            throw new UsuarioExistenteException(usuarioPostRequestVO.getTelefone(),usuarioPostRequestVO.getLogin());
+        }
+
         UsuarioEntity usuario = usuarioDAO.save(usuarioPostRequestVO.toUsuarioEntity());
 
         return UsuarioPostResponseVO.builder()
@@ -29,6 +38,11 @@ public class UsuarioService {
                 .build();
 
     }
+
+    private void verificaUsuarioCadastrado(UsuarioPostRequestVO request){
+
+    }
+
 
     public List findAll(){
         return usuarioDAO.findAll();
