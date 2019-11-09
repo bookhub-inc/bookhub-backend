@@ -41,13 +41,10 @@ public class UsuarioEntity {
  private Relacionamento relacionamento;
 
  @Column
- private String usuario;
+ private String login;
 
  @Column
  private String senha;
-
- @Column
- private String cpf;
 
  @Column(name="dta_criacao",nullable = false)
  private LocalDateTime dataCriacao;

@@ -26,7 +26,7 @@ public class UsuarioPostRequestVO {
     private String email;
 
     @ApiModelProperty(example = "thor")
-    private String usuario;
+    private String login;
 
     @ApiModelProperty(example = "pokpk13123")
     private String senha;
@@ -42,7 +42,7 @@ public class UsuarioPostRequestVO {
                 .sobrenome(sobrenome)
                 .telefone(telefone)
                 .email(email)
-                .usuario(usuario)
+                .login(login)
                 .senha(senha)
                 .idAvatar(idAvatar==null ? 1 : idAvatar)
                 .dataCriacao(LocalDateTime.now())
