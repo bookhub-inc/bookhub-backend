@@ -95,3 +95,9 @@ foreign key (id_Livro) references livro(id));
 
 alter table usuario
 add foreign key (id_avatar) references avatar(id);
+
+drop table livro_rejeitado;
+
+alter table livro add column motivo text;
+
+alter table livro add column dta_atualizacao datetime;
