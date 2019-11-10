@@ -7,13 +7,14 @@ import com.bookhub.backendbookhub.service.LivroService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @Api(value="Livro",tags = "Livro",description = " ")
@@ -30,4 +31,10 @@ public class LivroAPI {
         return new ResponseEntity<>(respose,CREATED);
     }
 
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Busca livros",notes = "Busca todos os livros aprovados podendo usar como filtro nome e/ou autor", response = LivrosPostRequestVO.class)
+    @GetMapping("/livro")
+    public ResponseEntity<List<LivroEntity>> findAllLivros(@RequestParam(name = "nome",required = false) String nome, @RequestParam(name = "autor",required = false) String autor) {
+        return new ResponseEntity<>(livroService.listByNomeAndAutor(nome,autor),OK);
+    }
 }
