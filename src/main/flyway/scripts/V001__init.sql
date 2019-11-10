@@ -95,14 +95,12 @@ foreign key (id_Livro) references livro(id));
 
 alter table usuario
 add foreign key (id_avatar) references avatar(id);
-<<<<<<< HEAD
 
 drop table livro_rejeitado;
 
 alter table livro add column motivo text;
 
 alter table livro add column dta_atualizacao datetime;
-=======
                                         
 alter table comentario rename livro_comentario;
                                         
@@ -119,4 +117,10 @@ nota int not null,
 foreing key (id_usuario) references usuario(id),
 foreing key (id_livro) references livro(id),
 foreing key (nota) references usuario_estante(nota));
->>>>>>> 5b89529415bc6a8e49c050d8f69d2eda44fc5820
+
+
+alter table livro modify column nome varchar(120);
+
+alter table livro add column url_livro text;
+
+alter table livro drop column capa;
