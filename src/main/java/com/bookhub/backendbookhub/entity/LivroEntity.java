@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -49,5 +50,13 @@ public class LivroEntity {
 
  @Column(name = "url_livro")
  private String url;
+
+ @Column(name = "motivo")
+ private String motivo;
+
+ @Column(name = "dta_atualizacao")
+ private LocalDateTime dataAtualizacao;
+
+
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class LivroDAO  {
@@ -30,6 +31,14 @@ public class LivroDAO  {
 
         return em.createNativeQuery(sql,LivroEntity.class)
                 .setParameter("nome",nome)
+                .getResultList();
+    }
+
+    public List findAll() {
+
+        String sql = "select * from livro ";
+
+        return em.createNativeQuery(sql,LivroEntity.class)
                 .getResultList();
     }
 
@@ -67,5 +76,23 @@ public class LivroDAO  {
         return em.find(UsuarioEstanteEntity.class,id);
     }
 
+
+    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor) {
+
+        StringBuilder sql = new StringBuilder("select * from livro where aprovado = 1 ");
+
+                if(Objects.nonNull(nome)) {
+                    sql.append(" upper(nome) like  upper(%:nome%) ");
+                }
+
+                if(Objects.nonNull(autor)) {
+                    sql.append(" AND upper(%:autor%) ");
+                }
+
+        return em.createNativeQuery(sql.toString(),LivroEntity.class)
+                .setParameter("nome",nome)
+                .setParameter("autor",autor)
+                .getResultList();
+    }
 
 }

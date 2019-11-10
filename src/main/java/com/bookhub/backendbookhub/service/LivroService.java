@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class LivroService {
 
@@ -52,6 +54,10 @@ public class LivroService {
         // TODO Colocar mensagem caso não retorne nada !
         UsuarioEstanteEntity usuarioEstante =livroDAO.findUsuarioEstante(idUsuarioEstante);
         livroDAO.removerUsuarioEstante(usuarioEstante);
+    }
+
+    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor) {
+        return livroDAO.listByNomeAndAutor(nome,autor);
     }
 
 
