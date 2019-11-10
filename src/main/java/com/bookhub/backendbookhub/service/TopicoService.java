@@ -39,5 +39,8 @@ public class TopicoService {
         return topicoDAO.find(id);
     }
 
+    public List findAll(){
+        return  topicoDAO.findAll();
+    }
 
 }

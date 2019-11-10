@@ -36,5 +36,13 @@ public class TopicoDAO {
     }
 
 
+    public List findAll(){
+
+        String query = "select * from topico order by dta_criacao desc";
+
+        return em.createNativeQuery(query,TopicoEntity.class)
+                .getResultList();
+
+    }
 
 }
