@@ -31,7 +31,7 @@ public class TopicoService {
                 .build();
     }
 
-    public List findByIdUsuario(final Integer idUsuario){
+    public List<TopicoEntity> findByIdUsuario(final Integer idUsuario){
         return topicoDAO.findByIdUsuario(idUsuario);
     }
 
@@ -39,7 +39,7 @@ public class TopicoService {
         return topicoDAO.find(id);
     }
 
-    public List findAll(){
+    public List<TopicoEntity> findAll(){
         return  topicoDAO.findAll();
     }
 

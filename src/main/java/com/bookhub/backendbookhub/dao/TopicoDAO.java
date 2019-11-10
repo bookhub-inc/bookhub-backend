@@ -25,7 +25,7 @@ public class TopicoDAO {
         return em.merge(topicoEntity);
     }
 
-    public List findByIdUsuario(final Integer idUsuario){
+    public List<TopicoEntity> findByIdUsuario(final Integer idUsuario){
 
         String query = "select * from topico where id_usuario = :idUsuario order by dta_criacao desc";
 
@@ -36,7 +36,7 @@ public class TopicoDAO {
     }
 
 
-    public List findAll(){
+    public List<TopicoEntity> findAll(){
 
         String query = "select * from topico order by dta_criacao desc";
 

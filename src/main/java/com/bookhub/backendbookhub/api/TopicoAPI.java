@@ -42,7 +42,7 @@ public class TopicoAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna todos os topicos de um usuario especifico", notes = "Retorna todos os topicos de um usuario especifico")
     @GetMapping("/topico/usuario/{idUsuario}")
-    public List findByIdUsuario(@ApiParam(example = "10",required = true) @PathVariable("idUsuario") final Integer idUsuario) {
+    public List<TopicoEntity> findByIdUsuario(@ApiParam(example = "10",required = true) @PathVariable("idUsuario") final Integer idUsuario) {
         return topicoService.findByIdUsuario(idUsuario);
     }
 
@@ -50,8 +50,8 @@ public class TopicoAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna todos os topicos", notes = "Retorna todos os topicos")
     @GetMapping("/topico")
-    public List findAll(@ApiParam(example = "10",required = true) @PathVariable("id") final Integer id) {
-        return topicoService.findByIdUsuario(id);
+    public List<TopicoEntity> findAll() {
+        return topicoService.findAll();
     }
 
 
