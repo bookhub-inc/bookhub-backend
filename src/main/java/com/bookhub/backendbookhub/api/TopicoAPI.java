@@ -2,10 +2,7 @@ package com.bookhub.backendbookhub.api;
 
 import com.bookhub.backendbookhub.api.vo.TopicoPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.TopicoPostResponseVO;
-import com.bookhub.backendbookhub.api.vo.UsuarioPostRequestVO;
-import com.bookhub.backendbookhub.api.vo.UsuarioPostResponseVO;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
-import com.bookhub.backendbookhub.entity.UsuarioEntity;
 import com.bookhub.backendbookhub.service.TopicoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
