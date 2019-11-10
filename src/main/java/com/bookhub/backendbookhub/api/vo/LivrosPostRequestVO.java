@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -24,6 +25,8 @@ public class LivrosPostRequestVO {
     private List<Integer> categorias;
     @ApiModelProperty(example = "http://statics.livrariacultura.net.br/products/capas_lg/624/46583624.jpg")
     private String url;
+    @ApiModelProperty(example = "1203")
+    private Long nPaginas;
 
     public LivroEntity toEntity(){
         return LivroEntity.builder()
@@ -31,6 +34,8 @@ public class LivrosPostRequestVO {
                 .editora(editora)
                 .autor(autor)
                 .url(url)
+                .nPaginas(nPaginas)
+                .dataAtualizacao(LocalDateTime.now())
                 .aprovado(false)
                 .build();
     }
