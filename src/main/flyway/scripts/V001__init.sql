@@ -95,9 +95,28 @@ foreign key (id_Livro) references livro(id));
 
 alter table usuario
 add foreign key (id_avatar) references avatar(id);
+<<<<<<< HEAD
 
 drop table livro_rejeitado;
 
 alter table livro add column motivo text;
 
 alter table livro add column dta_atualizacao datetime;
+=======
+                                        
+alter table comentario rename livro_comentario;
+                                        
+create table livro_rejeitado(
+id int primary key auto_increment not null,
+id_livro int not null,
+motivo text,
+foreign key (id_livro) references livro(id));
+                                        
+create table recomendador_livro_usuario(
+id_usuario int not null,
+id_livro int not null,
+nota int not null,
+foreing key (id_usuario) references usuario(id),
+foreing key (id_livro) references livro(id),
+foreing key (nota) references usuario_estante(nota));
+>>>>>>> 5b89529415bc6a8e49c050d8f69d2eda44fc5820
