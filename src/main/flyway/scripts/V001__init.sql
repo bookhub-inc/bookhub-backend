@@ -32,7 +32,6 @@ n_paginas int,
 aprovado tinyint(1));
 
 create table livxcat(
-id int primary key auto_increment,
 id_livro int not null,
 id_cat int not null);
 
@@ -90,19 +89,38 @@ id_usuario int not null,
 id_livro int not null,
 lido tinyint(1),
 comprado tinyint(1),
-nota float,
+nota tinyint(1),
 foreign key (id_Usuario) references usuario(id),
-foreign key (id_Livro) references livro(id)
-);
+foreign key (id_Livro) references livro(id));
 
 alter table usuario
 add foreign key (id_avatar) references avatar(id);
 
-CREATE TABLE recomendador_livro_usuario (
-   id_usuario BIGINT NOT NULL,
-   id_livro BIGINT NOT NULL,
-   nota FLOAT NOT NULL,
-   PRIMARY KEY (id_usuario, id_livro),
-   INDEX (id_usuario),
-   INDEX (id_livro)
- )
+drop table livro_rejeitado;
+
+alter table livro add column motivo text;
+
+alter table livro add column dta_atualizacao datetime;
+                                        
+alter table comentario rename livro_comentario;
+                                        
+create table livro_rejeitado(
+id int primary key auto_increment not null,
+id_livro int not null,
+motivo text,
+foreign key (id_livro) references livro(id));
+                                        
+create table recomendador_livro_usuario(
+id_usuario int not null,
+id_livro int not null,
+nota int not null,
+foreing key (id_usuario) references usuario(id),
+foreing key (id_livro) references livro(id),
+foreing key (nota) references usuario_estante(nota));
+
+
+alter table livro modify column nome varchar(120);
+
+alter table livro add column url_livro text;
+
+alter table livro drop column capa;
