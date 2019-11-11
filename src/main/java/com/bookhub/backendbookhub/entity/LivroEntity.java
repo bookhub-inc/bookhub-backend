@@ -1,70 +1,62 @@
 package com.bookhub.backendbookhub.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * @author Arthur Rio
  * @since 9/16/19
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 @Table(name = "LIVRO")
 @Entity
 public class LivroEntity {
 
  @Id
- @GeneratedValue
- @Column(name = "ID_LIVRO")
- private Long id;
-
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
  @Column
+ private Integer id;
+
+ @Column(nullable = false)
  private String nome;
 
- @Column
- private Date dataLancamento;
+ @Column(nullable = false)
+ private String autor;
 
  @Column
- private Long qtdadePaginas;
+ private String editora;
 
- public LivroEntity(final Long id, final String nome, final Date dataLancamento, final Long qtdadePaginas) {
-  this.id = id;
-  this.nome = nome;
-  this.dataLancamento = dataLancamento;
-  this.qtdadePaginas = qtdadePaginas;
- }
+ @Column
+ private String descricao;
 
- public Long getId() {
-  return id;
- }
+ @Column
+ private Boolean aprovado;
 
- public void setId(final Long id) {
-  this.id = id;
- }
+ @Column(name = "dta_lancamento")
+ private LocalDate dataLancamento;
 
- public String getNome() {
-  return nome;
- }
+ @Column(name = "n_paginas")
+ private Long nPaginas;
 
- public void setNome(final String nome) {
-  this.nome = nome;
- }
+ @Column(name = "url_livro")
+ private String url;
 
- public Date getDataLancamento() {
-  return dataLancamento;
- }
+ @Column(name = "motivo")
+ private String motivo;
 
- public void setDataLancamento(final Date dataLancamento) {
-  this.dataLancamento = dataLancamento;
- }
+ @Column(name = "dta_atualizacao")
+ private LocalDateTime dataAtualizacao;
 
- public Long getQtdadePaginas() {
-  return qtdadePaginas;
- }
 
- public void setQtdadePaginas(final Long qtdadePaginas) {
-  this.qtdadePaginas = qtdadePaginas;
- }
+
 }
