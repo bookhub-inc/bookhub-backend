@@ -14,6 +14,7 @@ import java.util.Objects;
 @Repository
 public class LivroDAO {
 
+    public static final String CORINGA = "%";
     @Autowired
     private EntityManager em;
 
@@ -83,21 +84,21 @@ public class LivroDAO {
         StringBuilder sql = new StringBuilder("select * from livro where aprovado = 1 ");
 
         if (Objects.nonNull(nome)) {
-            sql.append(" upper(nome) like  upper(%:nome%) ");
+            sql.append(" AND upper(nome) like  upper(:nome ) ");
         }
 
         if (Objects.nonNull(autor)) {
-            sql.append(" AND upper(%:autor%) ");
+            sql.append(" AND upper(autor) like upper(:autor) ");
         }
 
         Query query = em.createNativeQuery(sql.toString(), LivroEntity.class);
 
         if (Objects.nonNull(nome)) {
-            query.setParameter("nome", nome);
+            query.setParameter("nome", CORINGA.concat(nome).concat(CORINGA));
         }
 
         if (Objects.nonNull(autor)) {
-            query.setParameter("autor", autor);
+            query.setParameter("autor", CORINGA.concat(autor).concat(CORINGA));
         }
 
         return query.getResultList();
