@@ -1,6 +1,7 @@
 package com.bookhub.backendbookhub.dao;
 
 
+import com.bookhub.backendbookhub.api.vo.TopicoComentarioPutRequestVO;
 import com.bookhub.backendbookhub.entity.TopicoComentarioEntity;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,18 +62,18 @@ public class TopicoDAO {
         em.persist(topicoComentarioEntity);
     }
 
-    public void removeTopicoComentario(TopicoComentarioEntity topicoComentarioEntity){
-        em.remove(topicoComentarioEntity);
+    public void removeTopicoComentario(Integer idTopicoComentario){
+
+        TopicoComentarioEntity topicoComentario = em.find(TopicoComentarioEntity.class,idTopicoComentario);
+        em.remove(topicoComentario);
+
     }
 
-    public void atualizaTopicoComentario(TopicoComentarioEntity topicoComentarioEntity){
+    public void atualizaTopicoComentario(TopicoComentarioPutRequestVO topicoComentario){
 
-        TopicoComentarioEntity resultado = em.find(TopicoComentarioEntity.class, topicoComentarioEntity.getId());
+        TopicoComentarioEntity resultado = em.find(TopicoComentarioEntity.class, topicoComentario.getId());
 
-        if(Objects.isNull(resultado))
-            throw new RuntimeException("Comentario não existe!");
-
-        em.merge(topicoComentarioEntity);
+        resultado.setComentario(topicoComentario.getComentario());
 
     }
 

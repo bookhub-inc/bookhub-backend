@@ -1,5 +1,6 @@
 package com.bookhub.backendbookhub.service;
 
+import com.bookhub.backendbookhub.api.vo.TopicoComentarioPutRequestVO;
 import com.bookhub.backendbookhub.api.vo.TopicoPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.TopicoPostResponseVO;
 import com.bookhub.backendbookhub.dao.TopicoDAO;
@@ -48,6 +49,18 @@ public class TopicoService {
         return topicoDAO.findTopicoComentario(idTopico);
     }
 
+    public void insereTopicoComentario(TopicoComentarioEntity topicoComentarioEntity) {
+        topicoDAO.insereTopicoComentario(topicoComentarioEntity);
+    }
+
+    public void removeTopicoComentario(Integer idTopicoComentario){
+        topicoDAO.removeTopicoComentario(idTopicoComentario);
+    }
+
+
+    public void atualizaTopicoComentario(TopicoComentarioPutRequestVO topicoComentario) {
+        topicoDAO.atualizaTopicoComentario(topicoComentario);
+    }
 
 
 }
