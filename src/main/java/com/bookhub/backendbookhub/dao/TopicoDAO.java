@@ -58,8 +58,8 @@ public class TopicoDAO {
 
     }
 
-    public void insereTopicoComentario(TopicoComentarioEntity topicoComentarioEntity){
-        em.persist(topicoComentarioEntity);
+    public TopicoComentarioEntity insereTopicoComentario(TopicoComentarioEntity topicoComentarioEntity){
+        return em.merge(topicoComentarioEntity);
     }
 
     public void removeTopicoComentario(Integer idTopicoComentario){

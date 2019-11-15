@@ -1,0 +1,1 @@
+ALTER TABLE topico CHANGE COLUMN dta_criacao dta_criacao datetime;
