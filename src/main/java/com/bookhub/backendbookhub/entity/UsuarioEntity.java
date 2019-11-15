@@ -38,9 +38,6 @@ public class UsuarioEntity {
  private String telefone;
 
  @Column
- private Relacionamento relacionamento;
-
- @Column
  private String login;
 
  @Column

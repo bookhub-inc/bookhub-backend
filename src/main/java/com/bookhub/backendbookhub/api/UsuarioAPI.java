@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -32,8 +34,8 @@ public class UsuarioAPI {
 
  @GetMapping("/")
  @ApiOperation(value = "Hello World ! ", hidden = true)
- public String index(){
-  return "<h1>Hello World ! </h1>";
+ public RedirectView index(){
+  return new RedirectView("swagger-ui.html");
 
  }
 
