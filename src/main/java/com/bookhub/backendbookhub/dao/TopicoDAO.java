@@ -1,6 +1,7 @@
 package com.bookhub.backendbookhub.dao;
 
 
+import com.bookhub.backendbookhub.entity.TopicoComentarioEntity;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 @Transactional
@@ -42,6 +44,46 @@ public class TopicoDAO {
 
         return em.createNativeQuery(query,TopicoEntity.class)
                 .getResultList();
+
+    }
+
+    public List<TopicoComentarioEntity> findTopicoComentario(Integer idTopico) {
+
+        String query = "select * from topico_comentario where id_topico = :idTopico";
+
+        return em.createNativeQuery(query,TopicoComentarioEntity.class)
+                .setParameter("idTopico",idTopico)
+                .getResultList();
+
+    }
+
+    public void insereTopicoComentario(TopicoComentarioEntity topicoComentarioEntity){
+        em.persist(topicoComentarioEntity);
+    }
+
+    public void removeTopicoComentario(TopicoComentarioEntity topicoComentarioEntity){
+        em.remove(topicoComentarioEntity);
+    }
+
+    public void atualizaTopicoComentario(TopicoComentarioEntity topicoComentarioEntity){
+
+        TopicoComentarioEntity resultado = em.find(TopicoComentarioEntity.class, topicoComentarioEntity.getId());
+
+        if(Objects.isNull(resultado))
+            throw new RuntimeException("Comentario não existe!");
+
+        em.merge(topicoComentarioEntity);
+
+    }
+
+    public void removeTopico(Integer idTopico) {
+        String queryRemoveComentarios = "delete from topico_comentario where id_topico = :idTopico";
+
+        String queryRemoveTopico = "delete from topico where id_topico = :idTopico";
+
+        em.createNativeQuery(queryRemoveComentarios).setParameter("idTopico",idTopico).executeUpdate();
+
+        em.createNativeQuery(queryRemoveTopico).setParameter("idTopico",idTopico).executeUpdate();
 
     }
 

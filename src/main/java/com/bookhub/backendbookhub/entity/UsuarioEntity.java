@@ -1,14 +1,11 @@
 package com.bookhub.backendbookhub.entity;
 
-import com.bookhub.backendbookhub.enums.Relacionamento;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**

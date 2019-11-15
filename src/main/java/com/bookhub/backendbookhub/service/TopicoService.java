@@ -3,6 +3,7 @@ package com.bookhub.backendbookhub.service;
 import com.bookhub.backendbookhub.api.vo.TopicoPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.TopicoPostResponseVO;
 import com.bookhub.backendbookhub.dao.TopicoDAO;
+import com.bookhub.backendbookhub.entity.TopicoComentarioEntity;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,11 @@ public class TopicoService {
     public List<TopicoEntity> findAll(){
         return  topicoDAO.findAll();
     }
+
+    public List<TopicoComentarioEntity> findTopicoComentario(Integer idTopico){
+        return topicoDAO.findTopicoComentario(idTopico);
+    }
+
+
 
 }

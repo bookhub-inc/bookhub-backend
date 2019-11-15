@@ -2,6 +2,7 @@ package com.bookhub.backendbookhub.api;
 
 import com.bookhub.backendbookhub.api.vo.TopicoPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.TopicoPostResponseVO;
+import com.bookhub.backendbookhub.entity.TopicoComentarioEntity;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
 import com.bookhub.backendbookhub.service.TopicoService;
 import io.swagger.annotations.Api;
@@ -46,6 +47,13 @@ public class TopicoAPI {
         return topicoService.findByIdUsuario(idUsuario);
     }
 
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Retorna todos os comentarios de um topicos", notes = "Retorna todos os comentarios de um topicos")
+    @GetMapping("/topico/{idTopico}/comentario")
+    public List<TopicoComentarioEntity> findComentarioTopico(@ApiParam(example = "1",required = true) @PathVariable("idTopico") final Integer idTopico) {
+        return topicoService.findTopicoComentario(idTopico);
+    }
+
 
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna todos os topicos", notes = "Retorna todos os topicos")
@@ -53,6 +61,8 @@ public class TopicoAPI {
     public List<TopicoEntity> findAll() {
         return topicoService.findAll();
     }
+
+
 
 
 }
