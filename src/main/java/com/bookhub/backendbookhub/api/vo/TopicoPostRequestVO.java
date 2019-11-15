@@ -18,8 +18,6 @@ public class TopicoPostRequestVO {
     private String titulo;
     @ApiModelProperty(example = "Minha descricao teste")
     private String descricao;
-    @ApiModelProperty(example = "true",allowableValues = "true,false")
-    private Boolean spoiler;
     @ApiModelProperty(example = "1")
     private Integer idUsuario;
 
@@ -30,7 +28,7 @@ public class TopicoPostRequestVO {
                 .descricao(descricao)
                 .idUsuario(idUsuario)
                 .titulo(titulo)
-                .spoiler(spoiler)
+                .spoiler(false)
                 .build();
     }
 
