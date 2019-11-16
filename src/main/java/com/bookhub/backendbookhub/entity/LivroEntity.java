@@ -1,5 +1,8 @@
 package com.bookhub.backendbookhub.entity;
 
+import com.bookhub.backendbookhub.converter.LocalDateTimeConverter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +45,8 @@ public class LivroEntity {
  @Column
  private Boolean aprovado;
 
+ @JsonDeserialize(using = LocalDateTimeConverter.Deserializer.class)
+ @JsonSerialize(using = LocalDateTimeConverter.Serializer.class)
  @Column(name = "dta_lancamento")
  private LocalDate dataLancamento;
 
@@ -54,6 +59,8 @@ public class LivroEntity {
  @Column(name = "motivo")
  private String motivo;
 
+ @JsonDeserialize(using = LocalDateTimeConverter.Deserializer.class)
+ @JsonSerialize(using = LocalDateTimeConverter.Serializer.class)
  @Column(name = "dta_atualizacao")
  private LocalDateTime dataAtualizacao;
 

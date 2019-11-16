@@ -1,6 +1,7 @@
 package com.bookhub.backendbookhub.api;
 
 import com.bookhub.backendbookhub.api.vo.TopicoComentarioPostRequestVO;
+import com.bookhub.backendbookhub.api.vo.TopicoComentarioPutRequestVO;
 import com.bookhub.backendbookhub.api.vo.TopicoPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.TopicoPostResponseVO;
 import com.bookhub.backendbookhub.entity.TopicoComentarioEntity;
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @Api(value="Topico",tags = "Topico",description = " ")
@@ -72,12 +72,20 @@ public class TopicoAPI {
         return new ResponseEntity<>(response,CREATED);
     }
 
-    @ResponseStatus(OK)
+    @ResponseStatus(ACCEPTED)
     @ApiOperation(value = "Remove um comentario no Topico", notes = "Remove um comentario no Topico")
     @GetMapping("/topico/comentario/{idComentario}")
     public ResponseEntity<String> removeTopicoComentario(@ApiParam(example = "1",required = true) @PathVariable("idComentario") final Integer idComentario) {
         topicoService.removeTopicoComentario(idComentario);
-        return new ResponseEntity<>("Removido", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Removido", ACCEPTED);
+    }
+
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Altera um comentario no Topico", notes = "Altera um comentario no Topico")
+    @PutMapping("/topico/comentario")
+    public ResponseEntity<String> alteraTopicoComentario(@RequestBody TopicoComentarioPutRequestVO comentarioPutRequestVO) {
+        topicoService.atualizaTopicoComentario(comentarioPutRequestVO);
+        return new ResponseEntity<>("Atualizado", OK);
     }
 
 
