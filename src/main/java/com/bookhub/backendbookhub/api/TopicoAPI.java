@@ -74,7 +74,7 @@ public class TopicoAPI {
 
     @ResponseStatus(ACCEPTED)
     @ApiOperation(value = "Remove um comentario no Topico", notes = "Remove um comentario no Topico")
-    @GetMapping("/topico/comentario/{idComentario}")
+    @DeleteMapping("/topico/comentario/{idComentario}")
     public ResponseEntity<String> removeTopicoComentario(@ApiParam(example = "1",required = true) @PathVariable("idComentario") final Integer idComentario) {
         topicoService.removeTopicoComentario(idComentario);
         return new ResponseEntity<>("Removido", ACCEPTED);
