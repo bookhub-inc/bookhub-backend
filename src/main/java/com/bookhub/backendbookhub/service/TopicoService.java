@@ -46,6 +46,10 @@ public class TopicoService {
         return  topicoDAO.findAll();
     }
 
+    public void removeTopico(Integer idTopico){
+        topicoDAO.removeTopico(idTopico);
+    }
+
     public List<TopicoComentarioEntity> findTopicoComentario(Integer idTopico){
         return topicoDAO.findTopicoComentario(idTopico);
     }

@@ -56,6 +56,18 @@ public class TopicoAPI {
         return topicoService.findAll();
     }
 
+    @ResponseStatus(ACCEPTED)
+    @ApiOperation(value = "Remove um Topico", notes = "Remove um Topico")
+    @DeleteMapping("/topico/{idTopico}")
+    public ResponseEntity<String> removeTopico(@ApiParam(example = "1",required = true) @PathVariable("idTopico") final Integer idTopico) {
+        topicoService.removeTopico(idTopico);
+        return new ResponseEntity<>("Removido", ACCEPTED);
+    }
+
+
+
+    // Comentario
+
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna todos os comentarios de um topicos", notes = "Retorna todos os comentarios de um topicos")
     @GetMapping("/topico/{idTopico}/comentario")
