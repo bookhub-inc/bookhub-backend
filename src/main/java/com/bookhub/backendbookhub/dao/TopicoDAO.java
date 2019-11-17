@@ -2,6 +2,7 @@ package com.bookhub.backendbookhub.dao;
 
 
 import com.bookhub.backendbookhub.api.vo.TopicoComentarioPutRequestVO;
+import com.bookhub.backendbookhub.api.vo.TopicoPutRequestVO;
 import com.bookhub.backendbookhub.entity.TopicoComentarioEntity;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Objects;
 
 @Repository
 @Transactional
@@ -74,6 +74,14 @@ public class TopicoDAO {
         TopicoComentarioEntity resultado = em.find(TopicoComentarioEntity.class, topicoComentario.getId());
 
         resultado.setComentario(topicoComentario.getComentario());
+
+    }
+
+    public void atualizaTopico(TopicoPutRequestVO topico){
+
+        TopicoEntity resultado = em.find(TopicoEntity.class, topico.getId());
+
+        resultado.setDescricao(topico.getDescricao());
 
     }
 

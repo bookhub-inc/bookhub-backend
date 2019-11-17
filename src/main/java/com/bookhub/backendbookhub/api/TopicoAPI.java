@@ -1,9 +1,6 @@
 package com.bookhub.backendbookhub.api;
 
-import com.bookhub.backendbookhub.api.vo.TopicoComentarioPostRequestVO;
-import com.bookhub.backendbookhub.api.vo.TopicoComentarioPutRequestVO;
-import com.bookhub.backendbookhub.api.vo.TopicoPostRequestVO;
-import com.bookhub.backendbookhub.api.vo.TopicoPostResponseVO;
+import com.bookhub.backendbookhub.api.vo.*;
 import com.bookhub.backendbookhub.entity.TopicoComentarioEntity;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
 import com.bookhub.backendbookhub.service.TopicoService;
@@ -62,9 +59,18 @@ public class TopicoAPI {
     public ResponseEntity<String> removeTopico(@ApiParam(example = "1",required = true) @PathVariable("idTopico") final Integer idTopico) {
         topicoService.removeTopico(idTopico);
         return new ResponseEntity<>("Removido", ACCEPTED);
+
+
     }
 
 
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Altera Topico", notes = "Altera um Topico")
+    @PutMapping("/topico")
+    public ResponseEntity<String> alteraTopicoComentario(@RequestBody TopicoPutRequestVO topicoPutRequestVO) {
+        topicoService.atualizaTopico(topicoPutRequestVO);
+        return new ResponseEntity<>("Atualizado", OK);
+    }
 
     // Comentario
 
