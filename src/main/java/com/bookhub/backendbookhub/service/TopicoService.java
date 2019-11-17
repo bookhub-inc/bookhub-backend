@@ -47,7 +47,7 @@ public class TopicoService {
         topicoDAO.removeTopico(idTopico);
     }
 
-    public List<TopicoComentarioEntity> findTopicoComentario(Integer idTopico){
+    public List<TopicoComentarioResponseVO> findTopicoComentario(Integer idTopico){
         return topicoDAO.findTopicoComentario(idTopico);
     }
 

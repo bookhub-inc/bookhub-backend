@@ -77,7 +77,7 @@ public class TopicoAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna todos os comentarios de um topicos", notes = "Retorna todos os comentarios de um topicos")
     @GetMapping("/topico/{idTopico}/comentario")
-    public List<TopicoComentarioEntity> findTopicoComentario(@ApiParam(example = "1",required = true) @PathVariable("idTopico") final Integer idTopico) {
+    public List<TopicoComentarioResponseVO> findTopicoComentario(@ApiParam(example = "1",required = true) @PathVariable("idTopico") final Integer idTopico) {
         return topicoService.findTopicoComentario(idTopico);
     }
 
