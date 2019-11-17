@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 @Transactional
@@ -81,14 +82,19 @@ public class TopicoDAO {
 
         TopicoEntity resultado = em.find(TopicoEntity.class, topico.getId());
 
-        resultado.setDescricao(topico.getDescricao());
+        if(Objects.nonNull(topico.getTitulo())){
+            resultado.setTitulo(topico.getTitulo());
+        }
 
+        if(Objects.nonNull(topico.getDescricao())) {
+            resultado.setDescricao(topico.getDescricao());
+        }
     }
 
     public void removeTopico(Integer idTopico) {
         String queryRemoveComentarios = "delete from topico_comentario where id_topico = :idTopico";
 
-        String queryRemoveTopico = "delete from topico where id_topico = :idTopico";
+        String queryRemoveTopico = "delete from topico where id  = :idTopico";
 
         em.createNativeQuery(queryRemoveComentarios).setParameter("idTopico",idTopico).executeUpdate();
 

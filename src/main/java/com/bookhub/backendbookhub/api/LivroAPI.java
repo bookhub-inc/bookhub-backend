@@ -37,4 +37,22 @@ public class LivroAPI {
     public ResponseEntity<List<LivroEntity>> findAllLivros(@RequestParam(name = "nome",required = false) String nome, @RequestParam(name = "autor",required = false) String autor) {
         return new ResponseEntity<>(livroService.listByNomeAndAutor(nome,autor),OK);
     }
+
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Remove uma categoria de um livro",notes = "Remove uma categoria de um livro", response = LivrosPostRequestVO.class)
+    @DeleteMapping("/livro/categoria")
+    public ResponseEntity removeLivroCategoria(@RequestParam(name = "idCategoria",required = true) Integer idCategoria, @RequestParam(name = "idLivro",required = true) Integer idLivro) {
+        livroService.removerLivroCategoria(idCategoria,idLivro);
+        return new ResponseEntity<>(OK);
+    }
+
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Adiciona uma categoria de um livro",notes = "Adiciona uma categoria de um livro", response = LivrosPostRequestVO.class)
+    @PostMapping("/livro/categoria")
+    public ResponseEntity adicionaLivroCategoria(@RequestParam(name = "idCategoria",required = true) Integer idCategoria, @RequestParam(name = "idLivro",required = true) Integer idLivro) {
+        livroService.adicionarLivroCategoria(idCategoria,idLivro);
+        return new ResponseEntity<>(CREATED);
+    }
+
+
 }

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class TopicoPutRequestVO {
 
     private Integer id;
+    private String titulo;
     private String descricao;
 
 }

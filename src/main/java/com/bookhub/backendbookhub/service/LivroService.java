@@ -50,7 +50,7 @@ public class LivroService {
     }
 
     @Transactional
-    public void adicionarUsuarioEstante(Integer idUsuarioEstante){
+    public void removerUsuarioEstante(Integer idUsuarioEstante){
         // TODO Colocar mensagem caso não retorne nada !
         UsuarioEstanteEntity usuarioEstante =livroDAO.findUsuarioEstante(idUsuarioEstante);
         livroDAO.removerUsuarioEstante(usuarioEstante);
