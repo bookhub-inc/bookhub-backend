@@ -1,6 +1,7 @@
 package com.bookhub.backendbookhub.dao;
 
 
+import com.bookhub.backendbookhub.api.vo.AllTopicoResponseVO;
 import com.bookhub.backendbookhub.api.vo.TopicoComentarioPutRequestVO;
 import com.bookhub.backendbookhub.api.vo.TopicoComentarioResponseVO;
 import com.bookhub.backendbookhub.api.vo.TopicoPutRequestVO;
@@ -45,12 +46,35 @@ public class TopicoDAO {
     }
 
 
-    public List<TopicoEntity> findAll(){
+    public List<AllTopicoResponseVO> findAll(){
 
-        String query = "select * from topico order by dta_criacao desc";
+        String query = "select t.id,u.login, t.titulo,t.descricao,t.dta_criacao from topico  t\n" +
+                "inner join usuario u on u.id = t.id_usuario\n" +
+                "order by t.dta_criacao desc";
 
-        return em.createNativeQuery(query,TopicoEntity.class)
+        List<Object[]> resultList = em.createNativeQuery(query)
                 .getResultList();
+
+
+        List<AllTopicoResponseVO> listaTopicos = new ArrayList<>();
+
+        for(Object[] result : resultList){
+
+            AllTopicoResponseVO vo = AllTopicoResponseVO.builder()
+                    .id((Integer) result[0])
+                    .login((String) result[1] )
+                    .titulo((String) result[2])
+                    .descricao((String) result[3])
+                    .dataCriacao( ((Timestamp)result[4]).toLocalDateTime())
+                    .build();
+
+            listaTopicos.add(vo);
+
+
+        }
+
+
+        return listaTopicos;
 
     }
 

@@ -39,7 +39,7 @@ public class TopicoService {
         return topicoDAO.find(id);
     }
 
-    public List<TopicoEntity> findAll(){
+    public List<AllTopicoResponseVO> findAll(){
         return  topicoDAO.findAll();
     }
 

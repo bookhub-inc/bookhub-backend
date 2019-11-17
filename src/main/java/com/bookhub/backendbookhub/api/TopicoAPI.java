@@ -49,7 +49,7 @@ public class TopicoAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna todos os topicos", notes = "Retorna todos os topicos")
     @GetMapping("/topico")
-    public List<TopicoEntity> findAll() {
+    public List<AllTopicoResponseVO> findAll() {
         return topicoService.findAll();
     }
 
