@@ -60,5 +60,8 @@ public class LivroService {
         return livroDAO.listByNomeAndAutor(nome,autor);
     }
 
+    public List<UsuarioEstanteEntity> listaUsuarioEstante(Integer idUsuario) {
+        return livroDAO.listaUsuarioEstante(idUsuario);
+    }
 
 }

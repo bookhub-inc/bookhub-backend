@@ -74,6 +74,17 @@ public class LivroDAO {
 
     }
 
+    public List<UsuarioEstanteEntity> listaUsuarioEstante(Integer idUsuario){
+
+        String sql = "select * from usuario_estante where id_usuario = :idUsuario";
+
+        return em.createNativeQuery(sql,UsuarioEstanteEntity.class)
+                .setParameter("idUsuario",idUsuario)
+                .getResultList();
+
+    }
+
+
     public UsuarioEstanteEntity findUsuarioEstante(Integer id) {
         return em.find(UsuarioEstanteEntity.class, id);
     }

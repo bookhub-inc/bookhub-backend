@@ -4,6 +4,7 @@ import com.bookhub.backendbookhub.api.vo.UsuarioEstantePostRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioPostResponseVO;
 import com.bookhub.backendbookhub.entity.UsuarioEntity;
+import com.bookhub.backendbookhub.entity.UsuarioEstanteEntity;
 import com.bookhub.backendbookhub.exception.CampoExistenteException;
 import com.bookhub.backendbookhub.exception.UsuarioExistenteException;
 import com.bookhub.backendbookhub.exception.vo.CampoExistente;
@@ -11,15 +12,11 @@ import com.bookhub.backendbookhub.service.LivroService;
 import com.bookhub.backendbookhub.service.UsuarioService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -97,6 +94,13 @@ public class UsuarioAPI {
     @DeleteMapping("/usuario/estante/{id}")
     public void removeLivroEstante(@ApiParam(example = "10", required = true) @PathVariable("id") final Integer id) {
         livroService.removerUsuarioEstante(id);
+    }
+
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Retorna a estante do usuario", notes = "Retorna a estante do usuario")
+    @GetMapping("/usuario/estante/{id}")
+    public List<UsuarioEstanteEntity> listaEstante(@ApiParam(example = "1", required = true) @PathVariable("id") final Integer id) {
+        return livroService.listaUsuarioEstante(id);
     }
 
 
