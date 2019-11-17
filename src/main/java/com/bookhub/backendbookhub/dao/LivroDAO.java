@@ -58,8 +58,8 @@ public class LivroDAO {
                 .executeUpdate();
     }
 
-    public UsuarioEstanteEntity adicionarUsuarioEstante(UsuarioEstanteEntity usuarioEstanteEntity) {
-        return em.merge(usuarioEstanteEntity);
+    public void adicionarUsuarioEstante(UsuarioEstanteEntity usuarioEstanteEntity) {
+        em.merge(usuarioEstanteEntity);
     }
 
     public void removerUsuarioEstante(UsuarioEstanteEntity usuarioEstanteEntity) {
@@ -68,7 +68,7 @@ public class LivroDAO {
         String sql = " Delete from usuario_estante where id_livro =:idLivro and id_usuario = :idUsuario";
 
         em.createNativeQuery(sql)
-                .setParameter("idCat", usuarioEstanteEntity.getIdUsuario())
+                .setParameter("idUsuario", usuarioEstanteEntity.getIdUsuario())
                 .setParameter("idLivro", usuarioEstanteEntity.getIdLivro())
                 .executeUpdate();
 
