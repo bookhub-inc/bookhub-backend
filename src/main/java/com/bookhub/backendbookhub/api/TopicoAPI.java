@@ -35,7 +35,7 @@ public class TopicoAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna um topico buscando por ID", notes = "Retorna um topico buscando por ID")
     @GetMapping("/topico/{id}")
-    public TopicoEntity find(@ApiParam(example = "10",required = true) @PathVariable("id") final Integer id) {
+    public TopicoByIdResponseVO find(@ApiParam(example = "10",required = true) @PathVariable("id") final Integer id) {
         return topicoService.find(id);
     }
 

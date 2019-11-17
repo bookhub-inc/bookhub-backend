@@ -1,12 +1,10 @@
 package com.bookhub.backendbookhub.dao;
 
 
-import com.bookhub.backendbookhub.api.vo.AllTopicoResponseVO;
-import com.bookhub.backendbookhub.api.vo.TopicoComentarioPutRequestVO;
-import com.bookhub.backendbookhub.api.vo.TopicoComentarioResponseVO;
-import com.bookhub.backendbookhub.api.vo.TopicoPutRequestVO;
+import com.bookhub.backendbookhub.api.vo.*;
 import com.bookhub.backendbookhub.entity.TopicoComentarioEntity;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
+import com.bookhub.backendbookhub.entity.UsuarioEntity;
 import org.apache.commons.net.ntp.TimeStamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,8 +25,22 @@ public class TopicoDAO {
     private EntityManager em;
 
 
-    public TopicoEntity find(final Integer id) {
-        return em.find(TopicoEntity.class, id);
+    public TopicoByIdResponseVO find(final Integer id) {
+
+        TopicoEntity topicoEntity = em.find(TopicoEntity.class, id);
+
+        UsuarioEntity usuario = em.find(UsuarioEntity.class,topicoEntity.getIdUsuario());
+
+        return TopicoByIdResponseVO.builder()
+                .id(topicoEntity.getId())
+                .titulo(topicoEntity.getTitulo())
+                .descricao(topicoEntity.getDescricao())
+                .dataCriacao(topicoEntity.getDataCriacao())
+                .spoiler(topicoEntity.getSpoiler())
+                .login(usuario.getLogin())
+                .build();
+
+
     }
 
     public TopicoEntity save(final TopicoEntity topicoEntity) {

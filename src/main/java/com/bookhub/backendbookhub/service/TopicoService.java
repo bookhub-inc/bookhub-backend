@@ -35,7 +35,7 @@ public class TopicoService {
         return topicoDAO.findByIdUsuario(idUsuario);
     }
 
-    public TopicoEntity find (final Integer id){
+    public TopicoByIdResponseVO find (final Integer id){
         return topicoDAO.find(id);
     }
 
