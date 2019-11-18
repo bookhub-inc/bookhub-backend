@@ -7,6 +7,26 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+//@SqlResultSetMapping(
+//        name="UsuarioEstanteResponseVO",
+//        classes={
+//                @ConstructorResult(
+//                        targetClass=com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO.class,
+//                        columns={
+//                                @ColumnResult(name="l.id"),
+//                                @ColumnResult(name="l.nome"),
+//                                @ColumnResult(name="l.autor"),
+//                                @ColumnResult(name="l.descricao"),
+//                                @ColumnResult(name="l.url_livro"),
+//                                @ColumnResult(name="l.n_paginas"),
+//                                @ColumnResult(name="ae.nota"),
+//                                @ColumnResult(name="ae.lido"),
+//                                @ColumnResult(name="ae.comprado"),
+//                                @ColumnResult(name="ae.id_usuario")
+//                        }
+//                )
+//        }
+//)
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

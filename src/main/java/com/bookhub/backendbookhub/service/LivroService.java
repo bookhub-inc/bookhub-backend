@@ -2,6 +2,7 @@ package com.bookhub.backendbookhub.service;
 
 import com.bookhub.backendbookhub.api.vo.LivrosPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioEstantePostRequestVO;
+import com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO;
 import com.bookhub.backendbookhub.dao.LivroDAO;
 import com.bookhub.backendbookhub.entity.LivroCategoriaEntity;
 import com.bookhub.backendbookhub.entity.LivroEntity;
@@ -60,7 +61,7 @@ public class LivroService {
         return livroDAO.listByNomeAndAutor(nome,autor);
     }
 
-    public List<UsuarioEstanteEntity> listaUsuarioEstante(Integer idUsuario) {
+    public List<UsuarioEstanteResponseVO> listaUsuarioEstante(Integer idUsuario) {
         return livroDAO.listaUsuarioEstante(idUsuario);
     }
 

@@ -1,5 +1,6 @@
 package com.bookhub.backendbookhub.dao;
 
+import com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO;
 import com.bookhub.backendbookhub.entity.LivroCategoriaEntity;
 import com.bookhub.backendbookhub.entity.LivroEntity;
 import com.bookhub.backendbookhub.entity.UsuarioEstanteEntity;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,14 +76,41 @@ public class LivroDAO {
 
     }
 
-    public List<UsuarioEstanteEntity> listaUsuarioEstante(Integer idUsuario){
+    public List<UsuarioEstanteResponseVO> listaUsuarioEstante(Integer idUsuario){
 
-        String sql = "select * from usuario_estante where id_usuario = :idUsuario";
+        String sql = "\n" +
+                "select l.id,l.nome,l.autor,l.descricao,l.url_livro,l.n_paginas,ae.nota,ae.lido,ae.comprado,ae.id_usuario  from usuario_estante ae\n" +
+                "                inner join livro l on l.id = ae.id_livro\n" +
+                "                where ae.id_usuario = :idUsuario";
 
-        return em.createNativeQuery(sql,UsuarioEstanteEntity.class)
+        List<Object[]> lista =  em.createNativeQuery(sql)
                 .setParameter("idUsuario",idUsuario)
                 .getResultList();
 
+        List<UsuarioEstanteResponseVO> result = new ArrayList<>();
+
+
+        for(Object[] ob : lista ){
+
+            UsuarioEstanteResponseVO vo = UsuarioEstanteResponseVO.builder()
+                    .id((Integer) ob[0])
+                    .nome((String) ob[1])
+                    .autor((String) ob[2])
+                    .descricao((String) ob[3])
+                    .url((String) ob[4])
+                    .nPaginas( (Integer) ob[5])
+                    .nota((Integer) ob[6])
+                    .lido((Boolean) ob[7])
+                    .comprado((Boolean) ob[8])
+                    .idUsuario((Integer) ob[9])
+                    .build();
+
+            result.add(vo);
+
+        }
+
+
+        return result;
     }
 
 

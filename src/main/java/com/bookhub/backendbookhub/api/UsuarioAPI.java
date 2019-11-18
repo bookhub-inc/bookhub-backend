@@ -1,6 +1,7 @@
 package com.bookhub.backendbookhub.api;
 
 import com.bookhub.backendbookhub.api.vo.UsuarioEstantePostRequestVO;
+import com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioPostRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioPostResponseVO;
 import com.bookhub.backendbookhub.entity.UsuarioEntity;
@@ -99,7 +100,7 @@ public class UsuarioAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna a estante do usuario", notes = "Retorna a estante do usuario")
     @GetMapping("/usuario/estante/{id}")
-    public List<UsuarioEstanteEntity> listaEstante(@ApiParam(example = "1", required = true) @PathVariable("id") final Integer id) {
+    public List<UsuarioEstanteResponseVO> listaEstante(@ApiParam(example = "1", required = true) @PathVariable("id") final Integer id) {
         return livroService.listaUsuarioEstante(id);
     }
 
