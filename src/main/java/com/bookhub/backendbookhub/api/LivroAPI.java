@@ -32,7 +32,7 @@ public class LivroAPI {
     }
 
     @ResponseStatus(OK)
-    @ApiOperation(value = "Busca livros",notes = "Busca todos os livros aprovados podendo usar como filtro nome e/ou autor", response = LivrosPostRequestVO.class)
+    @ApiOperation(value = "Busca livros",notes = "Busca todos os livros aprovados podendo usar como filtro nome e/ou autor", response = LivroEntity.class)
     @GetMapping("/livro")
     public ResponseEntity<List<LivroEntity>> findAllLivros(@RequestParam(name = "nome",required = false) String nome, @RequestParam(name = "autor",required = false) String autor) {
         return new ResponseEntity<>(livroService.listByNomeAndAutor(nome,autor),OK);
