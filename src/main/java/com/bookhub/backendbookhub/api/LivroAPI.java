@@ -39,7 +39,7 @@ public class LivroAPI {
     }
 
     @ResponseStatus(OK)
-    @ApiOperation(value = "Remove uma categoria de um livro",notes = "Remove uma categoria de um livro", response = LivrosPostRequestVO.class)
+    @ApiOperation(value = "Remove uma categoria de um livro",notes = "Remove uma categoria de um livro")
     @DeleteMapping("/livro/categoria")
     public ResponseEntity removeLivroCategoria(@RequestParam(name = "idCategoria",required = true) Integer idCategoria, @RequestParam(name = "idLivro",required = true) Integer idLivro) {
         livroService.removerLivroCategoria(idCategoria,idLivro);
@@ -47,7 +47,7 @@ public class LivroAPI {
     }
 
     @ResponseStatus(OK)
-    @ApiOperation(value = "Adiciona uma categoria de um livro",notes = "Adiciona uma categoria de um livro", response = LivrosPostRequestVO.class)
+    @ApiOperation(value = "Adiciona uma categoria de um livro",notes = "Adiciona uma categoria de um livro")
     @PostMapping("/livro/categoria")
     public ResponseEntity adicionaLivroCategoria(@RequestParam(name = "idCategoria",required = true) Integer idCategoria, @RequestParam(name = "idLivro",required = true) Integer idLivro) {
         livroService.adicionarLivroCategoria(idCategoria,idLivro);
