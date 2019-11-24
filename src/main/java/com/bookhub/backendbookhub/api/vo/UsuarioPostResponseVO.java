@@ -21,7 +21,7 @@ public class UsuarioPostResponseVO {
 
     private String email;
 
-    private String usuario;
+    private String login;
 
     private Integer idAvatar;
 
