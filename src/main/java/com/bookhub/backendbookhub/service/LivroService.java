@@ -65,4 +65,8 @@ public class LivroService {
         return livroDAO.listaUsuarioEstante(idUsuario);
     }
 
+    public LivroEntity find(Integer id){
+        return livroDAO.find(id);
+    }
+
 }

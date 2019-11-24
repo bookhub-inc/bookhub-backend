@@ -39,6 +39,13 @@ public class LivroAPI {
     }
 
     @ResponseStatus(OK)
+    @ApiOperation(value = "Busca livro por id",notes = "Busca livro por id", response = LivroEntity.class)
+    @GetMapping("/livro/{id}")
+    public ResponseEntity<LivroEntity> findAllLivros(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(livroService.find(id),OK);
+    }
+
+    @ResponseStatus(OK)
     @ApiOperation(value = "Remove uma categoria de um livro",notes = "Remove uma categoria de um livro")
     @DeleteMapping("/livro/categoria")
     public ResponseEntity removeLivroCategoria(@RequestParam(name = "idCategoria",required = true) Integer idCategoria, @RequestParam(name = "idLivro",required = true) Integer idLivro) {
