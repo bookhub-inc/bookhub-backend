@@ -1,5 +1,6 @@
 package com.bookhub.backendbookhub.dao;
 
+import com.bookhub.backendbookhub.api.vo.LivrosPutRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO;
 import com.bookhub.backendbookhub.entity.LivroCategoriaEntity;
 import com.bookhub.backendbookhub.entity.LivroEntity;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -143,5 +145,46 @@ public class LivroDAO {
 
         return query.getResultList();
     }
+
+    public void alteraLivro(LivrosPutRequestVO livrosPutRequestVO) {
+
+        LivroEntity livro = em.find(LivroEntity.class,livrosPutRequestVO.getId());
+        livro.setDataAtualizacao(LocalDateTime.now());
+
+        if(Objects.nonNull(livrosPutRequestVO.getAprovado())){
+            livro.setAprovado(livrosPutRequestVO.getAprovado());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getMotivo())){
+            livro.setMotivo(livrosPutRequestVO.getMotivo());
+        }
+
+
+        if(Objects.nonNull(livrosPutRequestVO.getDataLancamento())){
+            livro.setDataLancamento(livrosPutRequestVO.getDataLancamento());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getAutor())){
+            livro.setAutor(livrosPutRequestVO.getAutor());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getEditora())){
+            livro.setEditora(livrosPutRequestVO.getEditora());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getNome())){
+            livro.setNome(livrosPutRequestVO.getNome());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getNPaginas())){
+            livro.setNPaginas(livrosPutRequestVO.getNPaginas());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getUrl())){
+            livro.setUrl(livrosPutRequestVO.getUrl());
+        }
+
+    }
+
 
 }

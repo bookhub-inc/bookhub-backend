@@ -1,6 +1,7 @@
 package com.bookhub.backendbookhub.service;
 
 import com.bookhub.backendbookhub.api.vo.LivrosPostRequestVO;
+import com.bookhub.backendbookhub.api.vo.LivrosPutRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioEstantePostRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO;
 import com.bookhub.backendbookhub.dao.LivroDAO;
@@ -67,6 +68,11 @@ public class LivroService {
 
     public LivroEntity find(Integer id){
         return livroDAO.find(id);
+    }
+
+
+    public void alteraLivro(LivrosPutRequestVO livrosPutRequestVO) {
+         livroDAO.alteraLivro(livrosPutRequestVO);
     }
 
 }

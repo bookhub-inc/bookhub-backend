@@ -2,6 +2,8 @@ package com.bookhub.backendbookhub.api;
 
 
 import com.bookhub.backendbookhub.api.vo.LivrosPostRequestVO;
+import com.bookhub.backendbookhub.api.vo.LivrosPutRequestVO;
+import com.bookhub.backendbookhub.api.vo.TopicoPutRequestVO;
 import com.bookhub.backendbookhub.entity.LivroEntity;
 import com.bookhub.backendbookhub.service.LivroService;
 import io.swagger.annotations.Api;
@@ -61,5 +63,12 @@ public class LivroAPI {
         return new ResponseEntity<>(CREATED);
     }
 
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Altera Livro", notes = "Altera Livro")
+    @PutMapping("/livro")
+    public ResponseEntity<String> alteraLivro(@RequestBody LivrosPutRequestVO livrosPutRequestVO) {
+        livroService.alteraLivro(livrosPutRequestVO);
+        return new ResponseEntity<>("Atualizado", OK);
+    }
 
 }
