@@ -121,9 +121,16 @@ public class LivroDAO {
     }
 
 
-    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor) {
+    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor, final Boolean aprovado) {
 
-        StringBuilder sql = new StringBuilder("select * from livro where aprovado = 1 ");
+        StringBuilder sql = new StringBuilder("select * from livro where 1=1 ");
+
+
+
+        if (Objects.nonNull(aprovado)) {
+            sql.append(" AND aprovado = :aprovado ");
+        }
+
 
         if (Objects.nonNull(nome)) {
             sql.append(" AND upper(nome) like  upper(:nome ) ");
@@ -139,8 +146,13 @@ public class LivroDAO {
             query.setParameter("nome", CORINGA.concat(nome).concat(CORINGA));
         }
 
+
         if (Objects.nonNull(autor)) {
             query.setParameter("autor", CORINGA.concat(autor).concat(CORINGA));
+        }
+
+        if (Objects.nonNull(aprovado)) {
+            query.setParameter("aprovado",aprovado?1:0);
         }
 
         return query.getResultList();

@@ -59,7 +59,11 @@ public class LivroService {
     }
 
     public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor) {
-        return livroDAO.listByNomeAndAutor(nome,autor);
+        return livroDAO.listByNomeAndAutor(nome,autor,true);
+    }
+
+    public List<LivroEntity> listAll() {
+        return livroDAO.listByNomeAndAutor(null,null,null);
     }
 
     public List<UsuarioEstanteResponseVO> listaUsuarioEstante(Integer idUsuario) {

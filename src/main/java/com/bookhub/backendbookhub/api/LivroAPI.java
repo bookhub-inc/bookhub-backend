@@ -41,6 +41,13 @@ public class LivroAPI {
     }
 
     @ResponseStatus(OK)
+    @ApiOperation(value = "Busca todos livros(aprovados ou não)",notes = "Busca todos livros(aprovados ou não)", response = LivroEntity.class)
+    @GetMapping("/livro")
+    public ResponseEntity<List<LivroEntity>> findAll() {
+        return new ResponseEntity<>(livroService.listAll(),OK);
+    }
+
+    @ResponseStatus(OK)
     @ApiOperation(value = "Busca livro por id",notes = "Busca livro por id", response = LivroEntity.class)
     @GetMapping("/livro/{id}")
     public ResponseEntity<LivroEntity> findAllLivros(@PathVariable("id") Integer id) {
