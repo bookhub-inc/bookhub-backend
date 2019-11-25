@@ -58,8 +58,8 @@ public class LivroService {
         livroDAO.removerUsuarioEstante(usuarioEstante);
     }
 
-    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor) {
-        return livroDAO.listByNomeAndAutor(nome,autor,true);
+    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor,final Boolean aprovado) {
+        return livroDAO.listByNomeAndAutor(nome,autor,aprovado);
     }
 
     public List<LivroEntity> listAll() {

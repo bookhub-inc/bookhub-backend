@@ -36,15 +36,10 @@ public class LivroAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Busca livros",notes = "Busca todos os livros aprovados podendo usar como filtro nome e/ou autor", response = LivroEntity.class)
     @GetMapping("/livro")
-    public ResponseEntity<List<LivroEntity>> findAllLivros(@RequestParam(name = "nome",required = false) String nome, @RequestParam(name = "autor",required = false) String autor) {
-        return new ResponseEntity<>(livroService.listByNomeAndAutor(nome,autor),OK);
-    }
-
-    @ResponseStatus(OK)
-    @ApiOperation(value = "Busca todos livros(aprovados ou não)",notes = "Busca todos livros(aprovados ou não)", response = LivroEntity.class)
-    @GetMapping("/livro")
-    public ResponseEntity<List<LivroEntity>> findAll() {
-        return new ResponseEntity<>(livroService.listAll(),OK);
+    public ResponseEntity<List<LivroEntity>> findAllLivros(@RequestParam(name = "nome",required = false) String nome,
+                                                           @RequestParam(name = "autor",required = false) String autor,
+                                                           @RequestParam(name = "aprovado",defaultValue = "true") Boolean aprovado) {
+        return new ResponseEntity<>(livroService.listByNomeAndAutor(nome,autor,aprovado),OK);
     }
 
     @ResponseStatus(OK)
