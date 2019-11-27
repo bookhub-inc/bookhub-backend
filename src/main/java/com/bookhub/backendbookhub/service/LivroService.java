@@ -58,6 +58,10 @@ public class LivroService {
         livroDAO.removerUsuarioEstante(usuarioEstante);
     }
 
+    public void removeLivro(final Integer id){
+        livroDAO.removeLivro(id);
+    }
+
     public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor,final Boolean aprovado) {
         return livroDAO.listByNomeAndAutor(nome,autor,aprovado);
     }
@@ -73,6 +77,7 @@ public class LivroService {
     public LivroEntity find(Integer id){
         return livroDAO.find(id);
     }
+
 
 
     public void alteraLivro(LivrosPutRequestVO livrosPutRequestVO) {

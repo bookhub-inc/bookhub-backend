@@ -24,6 +24,12 @@ public class LivroDAO {
     @Autowired
     private EntityManager em;
 
+    public void removeLivro(Integer id) {
+
+        LivroEntity livro = find(id);
+
+        em.remove(livro);
+    }
 
     public LivroEntity save(final LivroEntity livroEntity) {
         return em.merge(livroEntity);

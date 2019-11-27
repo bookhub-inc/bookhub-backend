@@ -50,6 +50,17 @@ public class LivroAPI {
     }
 
     @ResponseStatus(OK)
+    @ApiOperation(value = "Deleta livro por id",notes = "Deleta livro por id", response = LivroEntity.class)
+    @DeleteMapping("/livro/{id}")
+    public ResponseEntity<String> removeLivro(@PathVariable("id") Integer id) {
+
+        livroService.removeLivro(id);
+
+        return new ResponseEntity<>("Removido",OK);
+    }
+
+
+    @ResponseStatus(OK)
     @ApiOperation(value = "Remove uma categoria de um livro",notes = "Remove uma categoria de um livro")
     @DeleteMapping("/livro/categoria")
     public ResponseEntity removeLivroCategoria(@RequestParam(name = "idCategoria",required = true) Integer idCategoria, @RequestParam(name = "idLivro",required = true) Integer idLivro) {
@@ -72,5 +83,7 @@ public class LivroAPI {
         livroService.alteraLivro(livrosPutRequestVO);
         return new ResponseEntity<>("Atualizado", OK);
     }
+
+
 
 }
