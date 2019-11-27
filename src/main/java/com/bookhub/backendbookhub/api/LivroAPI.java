@@ -38,7 +38,7 @@ public class LivroAPI {
     @GetMapping("/livro")
     public ResponseEntity<List<LivroEntity>> findAllLivros(@RequestParam(name = "nome",required = false) String nome,
                                                            @RequestParam(name = "autor",required = false) String autor,
-                                                           @RequestParam(name = "aprovado",defaultValue = "true") Boolean aprovado) {
+                                                           @RequestParam(name = "aprovado",required = false) Boolean aprovado) {
         return new ResponseEntity<>(livroService.listByNomeAndAutor(nome,autor,aprovado),OK);
     }
 
