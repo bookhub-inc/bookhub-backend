@@ -45,7 +45,7 @@ public class LivroAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Busca livro por id",notes = "Busca livro por id", response = LivroEntity.class)
     @GetMapping("/livro/{id}")
-    public ResponseEntity<LivroEntity> findAllLivros(@PathVariable("id") Integer id) {
+    public ResponseEntity<LivroEntity> findLivro(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(livroService.find(id),OK);
     }
 
