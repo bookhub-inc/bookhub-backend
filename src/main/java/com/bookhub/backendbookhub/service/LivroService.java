@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class LivroService {
@@ -27,9 +28,11 @@ public class LivroService {
     public LivroEntity save(final LivrosPostRequestVO request){
         LivroEntity livro = livroDAO.save(request.toEntity());
 
-        request.getCategorias().forEach(idCategoria ->
-                self.adicionarLivroCategoria(idCategoria,livro.getId())
-        );
+        if(Objects.nonNull(request.getCategorias())) {
+            request.getCategorias().forEach(idCategoria ->
+                    self.adicionarLivroCategoria(idCategoria, livro.getId())
+            );
+        }
 
         return livro;
 
