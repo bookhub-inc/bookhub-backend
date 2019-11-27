@@ -50,7 +50,7 @@ public class LivroAPI {
     }
 
     @ResponseStatus(OK)
-    @ApiOperation(value = "Deleta livro por id",notes = "Deleta livro por id", response = LivroEntity.class)
+    @ApiOperation(value = "Deleta livro por id",notes = "Deleta livro por id")
     @DeleteMapping("/livro/{id}")
     public ResponseEntity<String> removeLivro(@PathVariable("id") Integer id) {
 
