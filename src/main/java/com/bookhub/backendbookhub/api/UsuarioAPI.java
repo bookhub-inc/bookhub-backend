@@ -94,8 +94,8 @@ public class UsuarioAPI {
     @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Excluir um livro da estante do usuário", notes = "Excluir um livro da estante do usuário")
     @DeleteMapping("/usuario/estante/{idEstante}")
-    public void removeLivroEstante(@ApiParam(example = "10", required = true) @PathVariable("id") final Integer id) {
-        livroService.removerUsuarioEstante(id);
+    public void removeLivroEstante(@ApiParam(example = "10", required = true) @PathVariable("idEstante") final Integer idEstante) {
+        livroService.removerUsuarioEstante(idEstante);
     }
 
     @ResponseStatus(OK)

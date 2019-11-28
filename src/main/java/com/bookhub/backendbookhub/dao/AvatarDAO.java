@@ -21,4 +21,8 @@ public class AvatarDAO {
         return entityManager.createQuery("from avatar").getResultList();
     }
 
+    public AvatarEntity find(Integer id){
+        return entityManager.find(AvatarEntity.class,id);
+    }
+
 }
