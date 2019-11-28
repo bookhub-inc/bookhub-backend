@@ -1,5 +1,6 @@
 package com.bookhub.backendbookhub.dao;
 
+import com.bookhub.backendbookhub.api.vo.LivrosPutRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO;
 import com.bookhub.backendbookhub.entity.LivroCategoriaEntity;
 import com.bookhub.backendbookhub.entity.LivroEntity;
@@ -9,17 +10,26 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Repository
+@Transactional
 public class LivroDAO {
 
     public static final String CORINGA = "%";
     @Autowired
     private EntityManager em;
 
+    public void removeLivro(Integer id) {
+
+        LivroEntity livro = find(id);
+
+        em.remove(livro);
+    }
 
     public LivroEntity save(final LivroEntity livroEntity) {
         return em.merge(livroEntity);
@@ -79,7 +89,7 @@ public class LivroDAO {
     public List<UsuarioEstanteResponseVO> listaUsuarioEstante(Integer idUsuario){
 
         String sql = "\n" +
-                "select l.id,l.nome,l.autor,l.descricao,l.url_livro,l.n_paginas,ae.nota,ae.lido,ae.comprado,ae.id_usuario  from usuario_estante ae\n" +
+                "select ae.id ,l.nome,l.autor,l.descricao,l.url_livro,l.n_paginas,ae.nota,ae.lido,ae.comprado,ae.id_usuario, ae.id_livro  from usuario_estante ae\n" +
                 "                inner join livro l on l.id = ae.id_livro\n" +
                 "                where ae.id_usuario = :idUsuario";
 
@@ -103,6 +113,7 @@ public class LivroDAO {
                     .lido((Boolean) ob[7])
                     .comprado((Boolean) ob[8])
                     .idUsuario((Integer) ob[9])
+                    .idLivro((Integer) ob[10])
                     .build();
 
             result.add(vo);
@@ -119,9 +130,16 @@ public class LivroDAO {
     }
 
 
-    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor) {
+    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor, final Boolean aprovado) {
 
-        StringBuilder sql = new StringBuilder("select * from livro where aprovado = 1 ");
+        StringBuilder sql = new StringBuilder("select * from livro where 1=1 ");
+
+
+
+        if (Objects.nonNull(aprovado)) {
+            sql.append(" AND aprovado = :aprovado ");
+        }
+
 
         if (Objects.nonNull(nome)) {
             sql.append(" AND upper(nome) like  upper(:nome ) ");
@@ -137,11 +155,57 @@ public class LivroDAO {
             query.setParameter("nome", CORINGA.concat(nome).concat(CORINGA));
         }
 
+
         if (Objects.nonNull(autor)) {
             query.setParameter("autor", CORINGA.concat(autor).concat(CORINGA));
         }
 
+        if (Objects.nonNull(aprovado)) {
+            query.setParameter("aprovado",aprovado?1:0);
+        }
+
         return query.getResultList();
     }
+
+    public void alteraLivro(LivrosPutRequestVO livrosPutRequestVO) {
+
+        LivroEntity livro = em.find(LivroEntity.class,livrosPutRequestVO.getId());
+        livro.setDataAtualizacao(LocalDateTime.now());
+
+        if(Objects.nonNull(livrosPutRequestVO.getAprovado())){
+            livro.setAprovado(livrosPutRequestVO.getAprovado());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getMotivo())){
+            livro.setMotivo(livrosPutRequestVO.getMotivo());
+        }
+
+
+        if(Objects.nonNull(livrosPutRequestVO.getDataLancamento())){
+            livro.setDataLancamento(livrosPutRequestVO.getDataLancamento());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getAutor())){
+            livro.setAutor(livrosPutRequestVO.getAutor());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getEditora())){
+            livro.setEditora(livrosPutRequestVO.getEditora());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getNome())){
+            livro.setNome(livrosPutRequestVO.getNome());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getNPaginas())){
+            livro.setNPaginas(livrosPutRequestVO.getNPaginas());
+        }
+
+        if(Objects.nonNull(livrosPutRequestVO.getUrl())){
+            livro.setUrl(livrosPutRequestVO.getUrl());
+        }
+
+    }
+
 
 }

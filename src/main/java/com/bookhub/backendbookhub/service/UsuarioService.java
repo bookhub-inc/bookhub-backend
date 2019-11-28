@@ -34,7 +34,7 @@ public class UsuarioService {
                 .idAvatar(usuario.getIdAvatar())
                 .nome(usuario.getNome())
                 .telefone(usuario.getTelefone())
-                .usuario(usuario.getLogin())
+                .login(usuario.getLogin())
                 .build();
 
     }

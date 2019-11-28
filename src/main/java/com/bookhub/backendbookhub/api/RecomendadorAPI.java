@@ -1,5 +1,6 @@
 package com.bookhub.backendbookhub.api;
 
+import com.bookhub.backendbookhub.entity.LivroEntity;
 import com.bookhub.backendbookhub.entity.TopicoEntity;
 import com.bookhub.backendbookhub.recomendador.UsuarioRecomendadorService;
 import io.swagger.annotations.Api;
@@ -24,7 +25,7 @@ public class RecomendadorAPI {
 
     @ResponseStatus(OK)
     @GetMapping("/sugestao/{idUsuario}")
-    public List<RecommendedItem> find(@ApiParam(example = "10",required = true) @PathVariable("idUsuario") final Integer id) {
+    public List<LivroEntity> find(@ApiParam(example = "10",required = true) @PathVariable("idUsuario") final Integer id) {
         return usuarioRecomendadorService.recomendarLivro(id);
     }
 

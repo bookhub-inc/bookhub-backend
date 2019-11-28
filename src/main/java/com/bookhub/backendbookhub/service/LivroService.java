@@ -1,6 +1,7 @@
 package com.bookhub.backendbookhub.service;
 
 import com.bookhub.backendbookhub.api.vo.LivrosPostRequestVO;
+import com.bookhub.backendbookhub.api.vo.LivrosPutRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioEstantePostRequestVO;
 import com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO;
 import com.bookhub.backendbookhub.dao.LivroDAO;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class LivroService {
@@ -26,9 +28,11 @@ public class LivroService {
     public LivroEntity save(final LivrosPostRequestVO request){
         LivroEntity livro = livroDAO.save(request.toEntity());
 
-        request.getCategorias().forEach(idCategoria ->
-                self.adicionarLivroCategoria(idCategoria,livro.getId())
-        );
+        if(Objects.nonNull(request.getCategorias())) {
+            request.getCategorias().forEach(idCategoria ->
+                    self.adicionarLivroCategoria(idCategoria, livro.getId())
+            );
+        }
 
         return livro;
 
@@ -57,12 +61,30 @@ public class LivroService {
         livroDAO.removerUsuarioEstante(usuarioEstante);
     }
 
-    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor) {
-        return livroDAO.listByNomeAndAutor(nome,autor);
+    public void removeLivro(final Integer id){
+        livroDAO.removeLivro(id);
+    }
+
+    public List<LivroEntity> listByNomeAndAutor(final String nome, final String autor,final Boolean aprovado) {
+        return livroDAO.listByNomeAndAutor(nome,autor,aprovado);
+    }
+
+    public List<LivroEntity> listAll() {
+        return livroDAO.listByNomeAndAutor(null,null,null);
     }
 
     public List<UsuarioEstanteResponseVO> listaUsuarioEstante(Integer idUsuario) {
         return livroDAO.listaUsuarioEstante(idUsuario);
+    }
+
+    public LivroEntity find(Integer id){
+        return livroDAO.find(id);
+    }
+
+
+
+    public void alteraLivro(LivrosPutRequestVO livrosPutRequestVO) {
+         livroDAO.alteraLivro(livrosPutRequestVO);
     }
 
 }

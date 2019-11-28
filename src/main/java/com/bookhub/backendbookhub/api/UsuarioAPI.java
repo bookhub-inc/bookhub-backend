@@ -1,9 +1,7 @@
 package com.bookhub.backendbookhub.api;
 
-import com.bookhub.backendbookhub.api.vo.UsuarioEstantePostRequestVO;
-import com.bookhub.backendbookhub.api.vo.UsuarioEstanteResponseVO;
-import com.bookhub.backendbookhub.api.vo.UsuarioPostRequestVO;
-import com.bookhub.backendbookhub.api.vo.UsuarioPostResponseVO;
+import com.bookhub.backendbookhub.api.vo.*;
+import com.bookhub.backendbookhub.dao.UsuarioDAO;
 import com.bookhub.backendbookhub.entity.UsuarioEntity;
 import com.bookhub.backendbookhub.entity.UsuarioEstanteEntity;
 import com.bookhub.backendbookhub.exception.CampoExistenteException;
@@ -34,6 +32,9 @@ public class UsuarioAPI {
 
     @Autowired
     private LivroService livroService;
+
+    @Autowired
+    private UsuarioDAO usuarioDAO;
 
     @GetMapping("/")
     @ApiOperation(value = "Hello World ! ", hidden = true)
@@ -92,18 +93,25 @@ public class UsuarioAPI {
 
     @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Excluir um livro da estante do usuário", notes = "Excluir um livro da estante do usuário")
-    @DeleteMapping("/usuario/estante/{id}")
+    @DeleteMapping("/usuario/estante/{idEstante}")
     public void removeLivroEstante(@ApiParam(example = "10", required = true) @PathVariable("id") final Integer id) {
         livroService.removerUsuarioEstante(id);
     }
 
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna a estante do usuario", notes = "Retorna a estante do usuario")
-    @GetMapping("/usuario/estante/{id}")
-    public List<UsuarioEstanteResponseVO> listaEstante(@ApiParam(example = "1", required = true) @PathVariable("id") final Integer id) {
+    @GetMapping("/usuario/estante/{idUsuario}")
+    public List<UsuarioEstanteResponseVO> listaEstante(@ApiParam(example = "1", required = true) @PathVariable("idUsuario") final Integer id) {
         return livroService.listaUsuarioEstante(id);
     }
 
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Altera Usuario", notes = "Altera um Usuario")
+    @PutMapping("/usuario")
+    public ResponseEntity<String> alteraUsuario(@RequestBody UsuarioPutRequestVO usuarioPutRequestVO) {
+        usuarioDAO.atualizaUsuairo(usuarioPutRequestVO);
+        return new ResponseEntity<>("Atualizado", OK);
+    }
 
 }
 

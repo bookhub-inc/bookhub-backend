@@ -1,6 +1,8 @@
 package com.bookhub.backendbookhub.recomendador;
 
 import com.bookhub.backendbookhub.dao.UsuarioEstanteDAO;
+import com.bookhub.backendbookhub.entity.LivroEntity;
+import com.bookhub.backendbookhub.service.LivroService;
 import lombok.SneakyThrows;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.eval.DataModelBuilder;
@@ -18,7 +20,9 @@ import org.apache.mahout.common.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UsuarioRecomendadorService {
@@ -29,14 +33,32 @@ public class UsuarioRecomendadorService {
     @Autowired
     private MySQLJDBCDataModel mySQLJDBCDataModel;
 
+    @Autowired
+    private LivroService livroService;
+
 
     @SneakyThrows
-    public List<RecommendedItem> recomendarLivro(Integer idUsuario)  {
+    public List<LivroEntity> recomendarLivro(Integer idUsuario)  {
 
 
         Recommender recommender = new RecomendadorBuilder().buildRecommender(mySQLJDBCDataModel);
 
-        return recommender.recommend(idUsuario, 3);
+        List<RecommendedItem> listaLivros = recommender.recommend(idUsuario, 2);
+
+        List<LivroEntity> listaLivrosRetorno = new ArrayList<>();
+
+        for( RecommendedItem item : listaLivros ){
+
+            LivroEntity livro = livroService.find(Long.valueOf(item.getItemID()).intValue());
+            if(Objects.nonNull(livro)) {
+                listaLivrosRetorno.add(livro);
+            }
+        }
+
+
+        return listaLivrosRetorno;
+
+
     }
 
 

@@ -2,6 +2,8 @@ package com.bookhub.backendbookhub.api;
 
 
 import com.bookhub.backendbookhub.api.vo.LivrosPostRequestVO;
+import com.bookhub.backendbookhub.api.vo.LivrosPutRequestVO;
+import com.bookhub.backendbookhub.api.vo.TopicoPutRequestVO;
 import com.bookhub.backendbookhub.entity.LivroEntity;
 import com.bookhub.backendbookhub.service.LivroService;
 import io.swagger.annotations.Api;
@@ -34,9 +36,29 @@ public class LivroAPI {
     @ResponseStatus(OK)
     @ApiOperation(value = "Busca livros",notes = "Busca todos os livros aprovados podendo usar como filtro nome e/ou autor", response = LivroEntity.class)
     @GetMapping("/livro")
-    public ResponseEntity<List<LivroEntity>> findAllLivros(@RequestParam(name = "nome",required = false) String nome, @RequestParam(name = "autor",required = false) String autor) {
-        return new ResponseEntity<>(livroService.listByNomeAndAutor(nome,autor),OK);
+    public ResponseEntity<List<LivroEntity>> findAllLivros(@RequestParam(name = "nome",required = false) String nome,
+                                                           @RequestParam(name = "autor",required = false) String autor,
+                                                           @RequestParam(name = "aprovado",required = false) Boolean aprovado) {
+        return new ResponseEntity<>(livroService.listByNomeAndAutor(nome,autor,aprovado),OK);
     }
+
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Busca livro por id",notes = "Busca livro por id", response = LivroEntity.class)
+    @GetMapping("/livro/{id}")
+    public ResponseEntity<LivroEntity> findLivro(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(livroService.find(id),OK);
+    }
+
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Deleta livro por id",notes = "Deleta livro por id")
+    @DeleteMapping("/livro/{id}")
+    public ResponseEntity<String> removeLivro(@PathVariable("id") Integer id) {
+
+        livroService.removeLivro(id);
+
+        return new ResponseEntity<>("Removido",OK);
+    }
+
 
     @ResponseStatus(OK)
     @ApiOperation(value = "Remove uma categoria de um livro",notes = "Remove uma categoria de um livro")
@@ -53,6 +75,15 @@ public class LivroAPI {
         livroService.adicionarLivroCategoria(idCategoria,idLivro);
         return new ResponseEntity<>(CREATED);
     }
+
+    @ResponseStatus(OK)
+    @ApiOperation(value = "Altera Livro", notes = "Altera Livro")
+    @PutMapping("/livro")
+    public ResponseEntity<String> alteraLivro(@RequestBody LivrosPutRequestVO livrosPutRequestVO) {
+        livroService.alteraLivro(livrosPutRequestVO);
+        return new ResponseEntity<>("Atualizado", OK);
+    }
+
 
 
 }
