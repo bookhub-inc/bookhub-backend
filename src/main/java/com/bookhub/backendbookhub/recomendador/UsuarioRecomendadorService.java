@@ -61,6 +61,21 @@ public class UsuarioRecomendadorService {
 
     }
 
+    public List<RecommendedItem> buscaRecomendacoes(Integer idUsuario) throws TasteException {
+
+        Recommender recommender = new RecomendadorBuilder().buildRecommender(mySQLJDBCDataModel);
+
+        return recommender.recommend(idUsuario, 10);
+
+    }
+
+    public void salvaRecomendacoes(){
+
+
+
+
+    }
+
 
     @SneakyThrows
     public String verificaTaxaErro() {
