@@ -60,6 +60,7 @@ public class UsuarioEstanteDAO {
 
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRES_NEW)
     public void removeRecomendador(Integer idUsuario) {
 
         em.createNativeQuery("delete from recomendador_livro_usuario where id_usuario = :idUsuario")
@@ -68,6 +69,7 @@ public class UsuarioEstanteDAO {
 
     }
 
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void insereRecomendador(UsuarioRecomendadorVO usuario) {
 
         StringBuilder sql = new StringBuilder(" INSERT INTO recomendador_livro_usuario(id_usuario,id_livro,nota) ")
