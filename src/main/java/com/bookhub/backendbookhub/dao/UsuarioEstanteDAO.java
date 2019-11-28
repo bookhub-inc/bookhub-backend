@@ -25,7 +25,7 @@ public class UsuarioEstanteDAO {
 
     public List<Integer> buscaUsuariosEstante() {
 
-        return em.createNativeQuery("select distinct id_usuario from usuario_estante",Integer.class)
+        return em.createNativeQuery("select distinct id_usuario from usuario_estante", Integer.class)
                 .getResultList();
 
     }
@@ -49,7 +49,7 @@ public class UsuarioEstanteDAO {
 
         List<UsuarioEstanteEntity> usuarioEstanteList = em.createQuery(format("from %s where id_usuario = :idUsuario ",
                 UsuarioEstanteEntity.class.getSimpleName()))
-                .setParameter("idUsuario",idUsuario)
+                .setParameter("idUsuario", idUsuario)
                 .getResultList();
 
         return usuarioEstanteList.stream()
@@ -77,21 +77,22 @@ public class UsuarioEstanteDAO {
         em.createNativeQuery(sql.toString())
                 .setParameter("idUsuario", usuario.getIdUsuario())
                 .setParameter("idLivro", usuario.getIdLivro())
-                .setParameter("nota", usuario.getNota());
+                .setParameter("nota", usuario.getNota())
+                .executeUpdate();
 
 
     }
 
 
-    public void insereLivroRecomendado(LivroRecomendadoEntity livroRecomendado){
+    public void insereLivroRecomendado(LivroRecomendadoEntity livroRecomendado) {
         em.merge(livroRecomendado);
     }
 
-    public List<LivroRecomendadoEntity> buscaLivrosRecomendados(Integer idUsuario){
+    public List<LivroRecomendadoEntity> buscaLivrosRecomendados(Integer idUsuario) {
 
         return em.createNativeQuery("select * from livro_recomendado where id_usuario = :idUsuario",
                 LivroRecomendadoEntity.class)
-                .setParameter("idUsuario",idUsuario)
+                .setParameter("idUsuario", idUsuario)
                 .getResultList();
 
     }

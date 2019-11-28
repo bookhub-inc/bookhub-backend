@@ -5,7 +5,7 @@ import com.bookhub.backendbookhub.entity.LivroEntity;
 import com.bookhub.backendbookhub.entity.LivroRecomendadoEntity;
 import com.bookhub.backendbookhub.service.LivroService;
 import lombok.SneakyThrows;
-import org.apache.mahout.cf.taste.common.TasteException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.eval.DataModelBuilder;
 import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
 import org.apache.mahout.cf.taste.eval.RecommenderEvaluator;
@@ -19,15 +19,16 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.common.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class UsuarioRecomendadorService {
 
@@ -73,6 +74,7 @@ public class UsuarioRecomendadorService {
 
     }
 
+    @Async("recomendacaoLivros")
     @Transactional
     public void geraRecomendacoesTodosUsuarios() {
 
@@ -85,8 +87,12 @@ public class UsuarioRecomendadorService {
     }
 
 
+    @Async("recomendacaoLivros")
     @Transactional
     public void geraRecomendacoes(Integer idUsuario) {
+
+        StopWatch time = new StopWatch();
+        time.start();
 
         List<UsuarioRecomendadorVO> listaUsuarios = usuarioEstanteDAO.buscaUsuariosRecomendar(idUsuario);
 
@@ -111,6 +117,8 @@ public class UsuarioRecomendadorService {
                     Long.valueOf(item.getItemID()).intValue()));
 
         }
+
+        log.info("time={}",time.prettyPrint());
 
     }
 
