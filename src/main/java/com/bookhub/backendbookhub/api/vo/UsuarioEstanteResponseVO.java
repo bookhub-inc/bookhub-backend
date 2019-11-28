@@ -26,5 +26,6 @@ public class UsuarioEstanteResponseVO {
     private Boolean lido;
     private Boolean comprado;
     private Integer idUsuario;
+    private Integer idLivro;
 
 }

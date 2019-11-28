@@ -89,7 +89,7 @@ public class LivroDAO {
     public List<UsuarioEstanteResponseVO> listaUsuarioEstante(Integer idUsuario){
 
         String sql = "\n" +
-                "select l.id,l.nome,l.autor,l.descricao,l.url_livro,l.n_paginas,ae.nota,ae.lido,ae.comprado,ae.id_usuario  from usuario_estante ae\n" +
+                "select ae.id ,l.nome,l.autor,l.descricao,l.url_livro,l.n_paginas,ae.nota,ae.lido,ae.comprado,ae.id_usuario, ae.id_livro  from usuario_estante ae\n" +
                 "                inner join livro l on l.id = ae.id_livro\n" +
                 "                where ae.id_usuario = :idUsuario";
 
@@ -113,6 +113,7 @@ public class LivroDAO {
                     .lido((Boolean) ob[7])
                     .comprado((Boolean) ob[8])
                     .idUsuario((Integer) ob[9])
+                    .idLivro((Integer) ob[10])
                     .build();
 
             result.add(vo);
