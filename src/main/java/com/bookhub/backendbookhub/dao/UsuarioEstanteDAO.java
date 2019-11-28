@@ -22,10 +22,18 @@ public class UsuarioEstanteDAO {
     @Autowired
     private EntityManager em;
 
-    public List<UsuarioRecomendadorVO> findAllRecomendador() {
+
+    public List<Integer> buscaUsuariosEstante() {
+
+        return em.createNativeQuery("select distinct id_usuario from usuario_estante",Integer.class)
+                .getResultList();
+
+    }
+
+    public List<UsuarioRecomendadorVO> buscaUsuariosRecomendar() {
 
 
-        List<UsuarioEstanteEntity> usuarioEstanteList = em.createQuery(format("from %s", UsuarioEstanteEntity.class.getSimpleName()))
+        List<UsuarioEstanteEntity> usuarioEstanteList = em.createQuery(format("from %s ", UsuarioEstanteEntity.class.getSimpleName()))
                 .getResultList();
 
         return usuarioEstanteList.stream()
@@ -36,7 +44,23 @@ public class UsuarioEstanteDAO {
 
     }
 
-    public void deletaRecomendador(Integer idUsuario) {
+    public List<UsuarioRecomendadorVO> buscaUsuariosRecomendar(Integer idUsuario) {
+
+
+        List<UsuarioEstanteEntity> usuarioEstanteList = em.createQuery(format("from %s where id_usuario = :idUsuario ",
+                UsuarioEstanteEntity.class.getSimpleName()))
+                .setParameter("idUsuario",idUsuario)
+                .getResultList();
+
+        return usuarioEstanteList.stream()
+                .filter(UsuarioEstanteEntity::getLido)
+                .filter(p -> Objects.nonNull(p.getNota()) && p.getNota() > 0)
+                .map(p -> new UsuarioRecomendadorVO(p.getIdUsuario(), p.getIdLivro(), p.getNota()))
+                .collect(Collectors.toList());
+
+    }
+
+    public void removeRecomendador(Integer idUsuario) {
 
         em.createNativeQuery("delete from recomendador_livro_usuario where id_usuario = :idUsuario")
                 .setParameter("idUsuario", idUsuario)
@@ -63,5 +87,13 @@ public class UsuarioEstanteDAO {
         em.merge(livroRecomendado);
     }
 
+    public List<LivroRecomendadoEntity> buscaLivrosRecomendados(Integer idUsuario){
+
+        return em.createNativeQuery("select * from livro_recomendado where id_usuario = :idUsuario",
+                LivroRecomendadoEntity.class)
+                .setParameter("idUsuario",idUsuario)
+                .getResultList();
+
+    }
 
 }

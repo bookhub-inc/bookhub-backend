@@ -2,6 +2,7 @@ package com.bookhub.backendbookhub.recomendador;
 
 import com.bookhub.backendbookhub.dao.UsuarioEstanteDAO;
 import com.bookhub.backendbookhub.entity.LivroEntity;
+import com.bookhub.backendbookhub.entity.LivroRecomendadoEntity;
 import com.bookhub.backendbookhub.service.LivroService;
 import lombok.SneakyThrows;
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -20,9 +21,12 @@ import org.apache.mahout.common.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioRecomendadorService {
@@ -36,43 +40,77 @@ public class UsuarioRecomendadorService {
     @Autowired
     private LivroService livroService;
 
-
     @SneakyThrows
-    public List<LivroEntity> recomendarLivro(Integer idUsuario)  {
-
+    public List<RecommendedItem> buscaRecomendacoes(Integer idUsuario) {
 
         Recommender recommender = new RecomendadorBuilder().buildRecommender(mySQLJDBCDataModel);
 
-        List<RecommendedItem> listaLivros = recommender.recommend(idUsuario, 2);
+        return recommender.recommend(idUsuario, 2);
+
+    }
+
+    public void salvaRecomendacoes(LivroRecomendadoEntity livroRecomendadoEntity) {
+
+        usuarioEstanteDAO.insereLivroRecomendado(livroRecomendadoEntity);
+
+    }
+
+    public List<LivroEntity> buscaLivrosRecomendados(Integer idUsuario) {
+
+        List<LivroRecomendadoEntity> listaLivrosRecomendados = usuarioEstanteDAO.buscaLivrosRecomendados(idUsuario);
 
         List<LivroEntity> listaLivrosRetorno = new ArrayList<>();
 
-        for( RecommendedItem item : listaLivros ){
+        for (LivroRecomendadoEntity livroRecomendado : listaLivrosRecomendados) {
 
-            LivroEntity livro = livroService.find(Long.valueOf(item.getItemID()).intValue());
-            if(Objects.nonNull(livro)) {
+            LivroEntity livro = livroService.find(livroRecomendado.getIdLivro());
+            if (Objects.nonNull(livro)) {
                 listaLivrosRetorno.add(livro);
             }
         }
 
-
         return listaLivrosRetorno;
 
-
     }
 
-    public List<RecommendedItem> buscaRecomendacoes(Integer idUsuario) throws TasteException {
+    @Transactional
+    public void geraRecomendacoesTodosUsuarios() {
 
-        Recommender recommender = new RecomendadorBuilder().buildRecommender(mySQLJDBCDataModel);
+        List<Integer> listaUsuarios = usuarioEstanteDAO.buscaUsuariosEstante();
 
-        return recommender.recommend(idUsuario, 10);
-
+        if (Objects.nonNull(listaUsuarios)) {
+            listaUsuarios
+                    .forEach(this::geraRecomendacoes);
+        }
     }
 
-    public void salvaRecomendacoes(){
+
+    @Transactional
+    public void geraRecomendacoes(Integer idUsuario) {
+
+        List<UsuarioRecomendadorVO> listaUsuarios = usuarioEstanteDAO.buscaUsuariosRecomendar(idUsuario);
+
+        usuarioEstanteDAO.removeRecomendador(idUsuario);
+
+        for (UsuarioRecomendadorVO usuario : listaUsuarios) {
+
+            usuarioEstanteDAO.insereRecomendador(UsuarioRecomendadorVO.builder()
+                    .idUsuario(usuario.getIdUsuario())
+                    .idLivro(usuario.getIdLivro())
+                    .nota(usuario.getNota())
+                    .build());
+
+        }
 
 
+        List<RecommendedItem> recommendedItemList = buscaRecomendacoes(idUsuario);
 
+        for (RecommendedItem item : recommendedItemList) {
+            usuarioEstanteDAO.insereLivroRecomendado(new LivroRecomendadoEntity(null,
+                    idUsuario,
+                    Long.valueOf(item.getItemID()).intValue()));
+
+        }
 
     }
 
@@ -87,8 +125,7 @@ public class UsuarioRecomendadorService {
         return String.valueOf(evaluator.evaluate(builder, null, mySQLJDBCDataModel, 0.9, 1.0));
     }
 
-    public static DataModelBuilder createNoPrefDataModelBuilder()
-            throws TasteException {
+    public static DataModelBuilder createNoPrefDataModelBuilder(){
         return new DataModelBuilder() {
             public DataModel buildDataModel(
                     FastByIDMap<PreferenceArray> trainingData) {
