@@ -93,15 +93,15 @@ public class UsuarioAPI {
 
     @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Excluir um livro da estante do usuário", notes = "Excluir um livro da estante do usuário")
-    @DeleteMapping("/usuario/estante/{id}")
+    @DeleteMapping("/usuario/estante/{idEstante}")
     public void removeLivroEstante(@ApiParam(example = "10", required = true) @PathVariable("id") final Integer id) {
         livroService.removerUsuarioEstante(id);
     }
 
     @ResponseStatus(OK)
     @ApiOperation(value = "Retorna a estante do usuario", notes = "Retorna a estante do usuario")
-    @GetMapping("/usuario/estante/{id}")
-    public List<UsuarioEstanteResponseVO> listaEstante(@ApiParam(example = "1", required = true) @PathVariable("id") final Integer id) {
+    @GetMapping("/usuario/estante/{idUsuario}")
+    public List<UsuarioEstanteResponseVO> listaEstante(@ApiParam(example = "1", required = true) @PathVariable("idUsuario") final Integer id) {
         return livroService.listaUsuarioEstante(id);
     }
 
