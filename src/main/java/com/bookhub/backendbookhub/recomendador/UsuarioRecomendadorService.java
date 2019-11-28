@@ -76,7 +76,7 @@ public class UsuarioRecomendadorService {
 
     @Async("recomendacaoLivros")
     @Transactional
-    public void geraRecomendacoesTodosUsuarios() {
+    public void geraRecomendacoesTodosUsuarios(StopWatch timer) {
 
         List<Integer> listaUsuarios = usuarioEstanteDAO.buscaUsuariosEstante();
 
@@ -84,6 +84,16 @@ public class UsuarioRecomendadorService {
             listaUsuarios
                     .forEach(this::geraRecomendacoes);
         }
+
+        timer.stop();
+    }
+
+    @Async("recomendacaoLivros")
+    @Transactional
+    public void geraRecomendacoes(Integer idUsuario,StopWatch timer) {
+
+        geraRecomendacoes(idUsuario);
+        timer.stop();
     }
 
 
@@ -91,12 +101,10 @@ public class UsuarioRecomendadorService {
     @Transactional
     public void geraRecomendacoes(Integer idUsuario) {
 
-        StopWatch time = new StopWatch();
-        time.start();
-
         List<UsuarioRecomendadorVO> listaUsuarios = usuarioEstanteDAO.buscaUsuariosRecomendar(idUsuario);
 
         usuarioEstanteDAO.removeRecomendador(idUsuario);
+        usuarioEstanteDAO.removeLivrosRecomendados(idUsuario);
 
         for (UsuarioRecomendadorVO usuario : listaUsuarios) {
 
@@ -117,8 +125,6 @@ public class UsuarioRecomendadorService {
                     Long.valueOf(item.getItemID()).intValue()));
 
         }
-
-        log.info("time={}",time.prettyPrint());
 
     }
 

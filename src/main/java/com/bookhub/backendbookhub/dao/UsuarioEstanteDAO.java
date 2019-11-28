@@ -69,6 +69,15 @@ public class UsuarioEstanteDAO {
 
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRES_NEW)
+    public void removeLivrosRecomendados(Integer idUsuario) {
+
+        em.createNativeQuery("delete from livro_recomendado where id_usuario = :idUsuario")
+                .setParameter("idUsuario", idUsuario)
+                .executeUpdate();
+
+    }
+
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void insereRecomendador(UsuarioRecomendadorVO usuario) {
 
