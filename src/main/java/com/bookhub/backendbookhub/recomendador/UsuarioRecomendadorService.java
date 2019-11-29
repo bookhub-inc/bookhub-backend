@@ -46,7 +46,7 @@ public class UsuarioRecomendadorService {
 //
 //        Recommender cachingRecommender = new CachingRecommender(recommender);
 
-        return recommender.recommend(idUsuario, 2);
+        return recommender.recommend(idUsuario, 10);
 
     }
 
@@ -140,7 +140,7 @@ public class UsuarioRecomendadorService {
                 new AverageAbsoluteDifferenceRecommenderEvaluator();
         double evaluation = evaluator.evaluate(new RecomendadorBuilder(),null, myModel, 0.9, 1.0);
 
-        listTaxas.add(String.format("Taxa: %d - Inicio: %s - Fim: %s",evaluation,dataInicio,LocalDateTime.now()) + "\n");
+        listTaxas.add(String.format("Taxa: %.2f - Inicio: %s - Fim: %s",evaluation,dataInicio,LocalDateTime.now()) + "\n");
 
     }
 
