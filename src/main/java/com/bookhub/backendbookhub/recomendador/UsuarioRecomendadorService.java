@@ -13,6 +13,8 @@ import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.eval.AverageAbsoluteDifferenceRecommenderEvaluator;
 import org.apache.mahout.cf.taste.impl.model.GenericBooleanPrefDataModel;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLJDBCDataModel;
+import org.apache.mahout.cf.taste.impl.model.jdbc.ReloadFromJDBCDataModel;
+import org.apache.mahout.cf.taste.impl.recommender.CachingRecommender;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,15 +39,20 @@ public class UsuarioRecomendadorService {
     private UsuarioEstanteDAO usuarioEstanteDAO;
 
     @Autowired
-    private MySQLJDBCDataModel mySQLJDBCDataModel;
+    private ReloadFromJDBCDataModel mySQLJDBCDataModel;
 
     @Autowired
     private LivroService livroService;
 
+    @Autowired
+    private Recommender recommender;
+
     @SneakyThrows
     public List<RecommendedItem> buscaRecomendacoes(Integer idUsuario) {
 
-        Recommender recommender = new RecomendadorBuilder().buildRecommender(mySQLJDBCDataModel);
+//        Recommender recommender = new RecomendadorBuilder().buildRecommender(mySQLJDBCDataModel);
+//
+//        Recommender cachingRecommender = new CachingRecommender(recommender);
 
         return recommender.recommend(idUsuario, 2);
 
@@ -129,23 +137,20 @@ public class UsuarioRecomendadorService {
     }
 
 
+    @Async("taxa")
     @SneakyThrows
-    public String verificaTaxaErro() {
-        RandomUtils.useTestSeed();
-        //calcula a média absoluta dos testes para informar a taxa de erro
-        RecommenderEvaluator evaluator = new AverageAbsoluteDifferenceRecommenderEvaluator();
-        RecommenderBuilder builder = new RecomendadorBuilder();
-        //90% para treino e 10% para teste
-        return String.valueOf(evaluator.evaluate(builder, null, mySQLJDBCDataModel, 0.9, 1.0));
+    public void verificaTaxaErro(ArrayList<String> listTaxas) {
+
+        LocalDateTime dataInicio = LocalDateTime.now();
+
+        DataModel myModel = mySQLJDBCDataModel;
+        RecommenderEvaluator evaluator =
+                new AverageAbsoluteDifferenceRecommenderEvaluator();
+        double evaluation = evaluator.evaluate(new RecomendadorBuilder(),null, myModel, 0.9, 1.0);
+
+        listTaxas.add(String.format("Taxa: %d - Inicio: %s - Fim: %s",evaluation,dataInicio,LocalDateTime.now()) + "\n");
+
     }
 
-    public static DataModelBuilder createNoPrefDataModelBuilder(){
-        return new DataModelBuilder() {
-            public DataModel buildDataModel(
-                    FastByIDMap<PreferenceArray> trainingData) {
-                return new GenericBooleanPrefDataModel(
-                        GenericBooleanPrefDataModel.toDataMap(trainingData));
-            }
-        };
-    }
+
 }
